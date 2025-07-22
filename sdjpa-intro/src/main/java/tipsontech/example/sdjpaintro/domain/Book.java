@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * Created by @tipsontech.
  */
@@ -17,12 +19,6 @@ import lombok.Setter;
 @Entity
 public class Book {
 
-    public Book(String title, String isbn, String publisher) {
-        this.title = title;
-        this.isbn = isbn;
-        this.publisher = publisher;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -31,5 +27,21 @@ public class Book {
     private String isbn;
     private String publisher;
 
+    public Book(String title, String isbn, String publisher) {
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        return Objects.equals(getId(), book.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
