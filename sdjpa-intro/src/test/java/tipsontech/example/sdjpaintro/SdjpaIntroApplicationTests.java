@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpa_intro;
+package tipsontech.example.sdjpaintro;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
