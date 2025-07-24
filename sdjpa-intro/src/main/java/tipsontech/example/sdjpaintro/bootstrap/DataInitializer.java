@@ -1,9 +1,11 @@
 package tipsontech.example.sdjpaintro.bootstrap;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpaintro.domain.Book;
 import tipsontech.example.sdjpaintro.repositories.BookRepository;
 
+@Component
 public class DataInitializer implements CommandLineRunner {
 
     private final BookRepository bookRepository;
