@@ -1,10 +1,12 @@
 package tipsontech.example.sdjpaintro.bootstrap;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpaintro.domain.Book;
 import tipsontech.example.sdjpaintro.repositories.BookRepository;
 
+@Profile({"local","default"})
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -16,6 +18,8 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        bookRepository.deleteAll();
+
         Book bookSBIA = new Book("Spring Boot in Action", "978-1484249693", "Manning");
         Book savedSBIA = bookRepository.save(bookSBIA);
 
