@@ -11,6 +11,7 @@ import tipsontech.example.sdjpaintro.domain.AuthorUuid;
 import tipsontech.example.sdjpaintro.domain.BookNatural;
 import tipsontech.example.sdjpaintro.domain.BookUuid;
 import tipsontech.example.sdjpaintro.domain.composite.AuthorComposite;
+import tipsontech.example.sdjpaintro.domain.composite.AuthorEmbedded;
 import tipsontech.example.sdjpaintro.domain.composite.NameId;
 import tipsontech.example.sdjpaintro.repositories.*;
 
@@ -36,6 +37,23 @@ public class MySQLIntegrationTest {
 
     @Autowired
     AuthorCompositeRepository authorCompositeRepository;
+
+    @Autowired
+    AuthorEmbeddedRepository authorEmbeddedRepository;
+
+    @Test
+    public void authorEmbeddedTest() {
+        NameId nameId = new NameId("John", "Doe");
+        AuthorEmbedded authorEmbedded = new AuthorEmbedded();
+        authorEmbedded.setNameId(nameId);
+        authorEmbedded.setCountry("USA");
+
+        AuthorEmbedded saved = authorEmbeddedRepository.save(authorEmbedded);
+        assertThat(saved).isNotNull();
+
+        AuthorEmbedded fetched = authorEmbeddedRepository.findById(nameId).orElse(null);
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     public void authorCompositeTest() {
