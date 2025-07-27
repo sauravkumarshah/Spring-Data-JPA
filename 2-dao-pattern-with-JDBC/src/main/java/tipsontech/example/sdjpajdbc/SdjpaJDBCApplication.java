@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpaintro;
+package tipsontech.example.sdjpajdbc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

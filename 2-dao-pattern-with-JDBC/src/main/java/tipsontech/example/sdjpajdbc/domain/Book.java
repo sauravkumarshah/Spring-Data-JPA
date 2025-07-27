@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpaintro.domain;
+package tipsontech.example.sdjpajdbc.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
