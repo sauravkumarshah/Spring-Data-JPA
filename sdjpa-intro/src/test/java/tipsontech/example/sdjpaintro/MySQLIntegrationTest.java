@@ -10,10 +10,9 @@ import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpaintro.domain.AuthorUuid;
 import tipsontech.example.sdjpaintro.domain.BookNatural;
 import tipsontech.example.sdjpaintro.domain.BookUuid;
-import tipsontech.example.sdjpaintro.repositories.AuthorUuidRepository;
-import tipsontech.example.sdjpaintro.repositories.BookNaturalRepository;
-import tipsontech.example.sdjpaintro.repositories.BookRepository;
-import tipsontech.example.sdjpaintro.repositories.BookUuidRepository;
+import tipsontech.example.sdjpaintro.domain.composite.AuthorComposite;
+import tipsontech.example.sdjpaintro.domain.composite.NameId;
+import tipsontech.example.sdjpaintro.repositories.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -34,6 +33,24 @@ public class MySQLIntegrationTest {
 
     @Autowired
     BookNaturalRepository bookNaturalRepository;
+
+    @Autowired
+    AuthorCompositeRepository authorCompositeRepository;
+
+    @Test
+    public void authorCompositeTest() {
+        NameId nameId = new NameId("John", "Doe");
+        AuthorComposite authorComposite = new AuthorComposite();
+        authorComposite.setFirstName(nameId.getFirstName());
+        authorComposite.setLastName(nameId.getLastName());
+        authorComposite.setCountry("USA");
+
+        AuthorComposite saved = authorCompositeRepository.save(authorComposite);
+        assertThat(saved).isNotNull();
+
+        AuthorComposite fetched = authorCompositeRepository.findById(nameId).orElse(null);
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     public void bookNaturalTest() {
