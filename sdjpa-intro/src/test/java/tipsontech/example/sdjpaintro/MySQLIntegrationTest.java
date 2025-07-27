@@ -8,8 +8,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpaintro.domain.AuthorUuid;
+import tipsontech.example.sdjpaintro.domain.BookNatural;
 import tipsontech.example.sdjpaintro.domain.BookUuid;
 import tipsontech.example.sdjpaintro.repositories.AuthorUuidRepository;
+import tipsontech.example.sdjpaintro.repositories.BookNaturalRepository;
 import tipsontech.example.sdjpaintro.repositories.BookRepository;
 import tipsontech.example.sdjpaintro.repositories.BookUuidRepository;
 
@@ -29,6 +31,21 @@ public class MySQLIntegrationTest {
 
     @Autowired
     BookUuidRepository bookUuidRepository;
+
+    @Autowired
+    BookNaturalRepository bookNaturalRepository;
+
+    @Test
+    public void bookNaturalTest() {
+        BookNatural bookNatural = new BookNatural();
+        bookNatural.setTitle("Book One");
+        bookNatural.setIsbn("111-1111111111");
+        bookNatural.setPublisher("Publisher One");
+        BookNatural saved = bookNaturalRepository.save(bookNatural);
+
+        BookNatural fetched = bookNaturalRepository.getById(saved.getTitle());
+        assertThat(fetched).isNotNull();
+    }
     @Test
     public void testBookRepository() {
         long countBefore = bookRepository.count();
