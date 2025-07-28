@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpajdbc;
+package tipsontech.example.sdjpajdbctemplate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +7,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.sdjpajdbc.dao.AuthorDao;
-import tipsontech.example.sdjpajdbc.dao.AuthorDaoImpl;
-import tipsontech.example.sdjpajdbc.domain.Author;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDao;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDaoImpl;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

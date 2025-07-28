@@ -1,7 +1,7 @@
-package tipsontech.example.sdjpajdbc.dao;
+package tipsontech.example.sdjpajdbctemplate.dao;
 
 import org.springframework.jdbc.core.RowMapper;
-import tipsontech.example.sdjpajdbc.domain.Author;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

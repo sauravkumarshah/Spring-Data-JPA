@@ -1,11 +1,9 @@
-package tipsontech.example.sdjpajdbc.dao;
+package tipsontech.example.sdjpajdbctemplate.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import tipsontech.example.sdjpajdbc.domain.Author;
-
-import java.util.List;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {

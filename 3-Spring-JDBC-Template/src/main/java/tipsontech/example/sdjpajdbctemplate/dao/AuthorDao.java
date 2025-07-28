@@ -1,6 +1,6 @@
-package tipsontech.example.sdjpajdbc.dao;
+package tipsontech.example.sdjpajdbctemplate.dao;
 
-import tipsontech.example.sdjpajdbc.domain.Author;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 public interface AuthorDao {
     Author getById(Long id);
