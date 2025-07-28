@@ -1,16 +1,20 @@
 package tipsontech.example.sdjpajdbc.dao;
 
+import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbc.domain.Book;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
+@Component
 public class BookDaoImpl implements BookDao {
 
     private DataSource datasource;
+    private AuthorDao authorDao;
 
-    public BookDaoImpl(DataSource datasource) {
+    public BookDaoImpl(DataSource datasource, AuthorDao authorDao) {
         this.datasource = datasource;
+        this.authorDao = authorDao;
     }
 
     @Override
@@ -23,7 +27,12 @@ public class BookDaoImpl implements BookDao {
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getIsbn());
             ps.setString(3, book.getPublisher());
-            ps.setLong(4, book.getAuthorId());
+
+            if(book.getAuthor() != null) {
+                ps.setLong(4, book.getAuthor().getId());
+            } else {
+                ps.setNull(4, -5);
+            }
             ps.execute();
 
             Statement stmt = conn.createStatement();
@@ -50,7 +59,12 @@ public class BookDaoImpl implements BookDao {
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getIsbn());
             ps.setString(3, book.getPublisher());
-            ps.setLong(4, book.getAuthorId());
+
+            if(book.getAuthor() != null) {
+                ps.setLong(4, book.getAuthor().getId());
+            } else {
+                ps.setNull(4, -5);
+            }
             ps.setLong(5, book.getId());
             ps.execute();
             return book;
@@ -126,7 +140,7 @@ public class BookDaoImpl implements BookDao {
             book.setTitle(rs.getString("title"));
             book.setIsbn(rs.getString("isbn"));
             book.setPublisher(rs.getString("publisher"));
-            book.setAuthorId(rs.getLong("author_id"));
+            book.setAuthor(authorDao.getById(rs.getLong(5)));
             return book;
         } catch (SQLException e) {
             throw new RuntimeException(e);

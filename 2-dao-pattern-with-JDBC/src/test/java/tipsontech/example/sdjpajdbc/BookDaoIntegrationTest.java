@@ -19,59 +19,64 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ActiveProfiles("local")
 @DataJpaTest
 //@ComponentScan(basePackages = {"tipsontech.example.sdjpajdbc.dao"})
-@Import(BookDaoImpl.class)
+@Import({BookDaoImpl.class, AuthorDaoImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BookDaoIntegrationTest {
-
 
     @Autowired
     private BookDao bookDao;
 
+    @Autowired
+    private AuthorDao authorDao;
+
     @Test
-    public void testGetAuthor(){
+    public void testGetBook(){
         Book author = bookDao.getById(1L);
         assertThat(author).isNotNull();
     }
 
     @Test
-    public void testGetAuthorByName(){
+    public void testGetBookByTitle(){
         Book author = bookDao.getByTitle("Spring In Action");
         assertThat(author).isNotNull();
         assertThat(author.getTitle()).isEqualTo("Spring In Action");
     }
 
     @Test
-    public void testSaveAuthor(){
+    public void testSaveBook(){
         Book book = new Book();
         book.setTitle("The Lord of the Rings");
         book.setIsbn("123456789");
         book.setPublisher("Penguin");
-        book.setAuthorId(1L);
         Book savedBook = bookDao.save(book);
         assertThat(savedBook.getId()).isNotNull();
     }
 
     @Test
-    public void testUpdateAuthor(){
+    public void testUpdateBook() {
+        Author author = authorDao.getById(1L); // Use an ID that exists in your database
+        assertThat(author).isNotNull();
+
         Book book = new Book();
         book.setTitle("The Lord of the Rongs");
         book.setIsbn("123456789");
         book.setPublisher("Penguin");
-        book.setAuthorId(1L);
+        book.setAuthor(author);
+
         Book savedBook = bookDao.save(book);
+        assertThat(savedBook.getId()).isNotNull();
 
         savedBook.setTitle("The Lord of the Rings");
-        Book updatedBook = bookDao.update(book);
+        Book updatedBook = bookDao.update(savedBook);
         assertThat(updatedBook.getTitle()).isEqualTo("The Lord of the Rings");
     }
 
     @Test
-    public void testDeleteAuthor(){
+    public void testDeleteBook(){
         Book book = new Book();
         book.setTitle("The Alchemist");
         book.setIsbn("123456789");
         book.setPublisher("Penguin");
-        book.setAuthorId(1L);
         Book savedBook = bookDao.save(book);
         bookDao.delete(savedBook.getId());
         assertThat(bookDao.getById(savedBook.getId())).isNull();
