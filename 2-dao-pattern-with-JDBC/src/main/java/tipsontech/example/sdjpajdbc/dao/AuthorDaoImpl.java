@@ -108,6 +108,22 @@ public class AuthorDaoImpl implements AuthorDao {
         }
     }
 
+    @Override
+    public void delete(Long id) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = datasource.getConnection();
+            ps = conn.prepareStatement("DELETE FROM Author where id = ?");
+            ps.setLong(1, id);
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeAll(null, ps, conn);
+        }
+    }
+
     private static void closeAll(ResultSet rs, PreparedStatement ps, Connection conn) {
         try {
             if (rs != null) {

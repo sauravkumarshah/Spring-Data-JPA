@@ -7,4 +7,5 @@ public interface AuthorDao {
     Author getByName(String firstName, String lastName);
     Author save(Author author);
     Author update(Author author);
+    void delete(Long id);
 }
