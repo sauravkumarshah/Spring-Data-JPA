@@ -23,12 +23,14 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author getByName(String firstName, String lastName) {
-        return null;
+        return this.jdbcTemplate.queryForObject("SELECT * FROM author WHERE first_name = ? AND last_name = ?", getRowMapper(), firstName, lastName);
     }
 
     @Override
     public Author save(Author author) {
-        return null;
+       this.jdbcTemplate.update("INSERT INTO author (first_name, last_name) VALUES (?, ?)", author.getFirstName(), author.getLastName());
+       Long createdId = this.jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
+       return this.getById(createdId);
     }
 
     @Override
