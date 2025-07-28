@@ -5,10 +5,7 @@ import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbc.domain.Author;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
@@ -23,13 +20,17 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public Author getById(Long id) {
         Connection conn = null;
-        Statement stmt = null;
+//        Statement stmt = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             conn = datasource.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM Author where id = " + id);
+//            stmt = conn.createStatement();
+            ps = conn.prepareStatement("SELECT * FROM Author where id = ?");
+            ps.setLong(1, id);
+            rs = ps.executeQuery();
+//            rs = stmt.executeQuery("SELECT * FROM Author where id = " + id);
 
             if (rs.next()) {
                 Author author = new Author();
@@ -49,9 +50,17 @@ public class AuthorDaoImpl implements AuthorDao {
                     throw new RuntimeException(e);
                 }
             }
-            if (stmt != null) {
+//            if (stmt != null) {
+//                try {
+//                    stmt.close();
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+
+            if (ps != null) {
                 try {
-                    stmt.close();
+                    ps.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
