@@ -24,6 +24,7 @@ public class AurthorDaoIntegrationTest {
 
     @Autowired
     private AuthorDao authorDao;
+
     @Test
     public void testGetAuthor(){
         Author author = authorDao.getById(1L);
@@ -45,5 +46,17 @@ public class AurthorDaoIntegrationTest {
         author.setLastName("Thompson");
         author = authorDao.save(author);
         assertThat(author.getId()).isNotNull();
+    }
+
+    @Test
+    public void testUpdateAuthor(){
+        Author author = new Author();
+        author.setFirstName("John");
+        author.setLastName("Th");
+        Author savedAuthor = authorDao.save(author);
+
+        savedAuthor.setLastName("Thompson");
+        Author  updatedAuthor = authorDao.update(author);
+        assertThat(updatedAuthor.getLastName()).isEqualTo("Thompson");
     }
 }
