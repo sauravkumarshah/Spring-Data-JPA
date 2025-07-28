@@ -1,16 +1,18 @@
-package tipsontech.example.sdjpajdbc;
+package tipsontech.example.sdjpajdbctemplate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.sdjpajdbc.dao.AuthorDao;
-import tipsontech.example.sdjpajdbc.dao.AuthorDaoImpl;
-import tipsontech.example.sdjpajdbc.domain.Author;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDao;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDaoImpl;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ActiveProfiles("local")
@@ -44,14 +46,17 @@ public class AuthorDaoIntegrationTest {
         author.setFirstName("Johny");
         author.setLastName("Thompson");
         author = authorDao.save(author);
+
+        System.out.println("New Id is: " + author.getId());
+
         assertThat(author.getId()).isNotNull();
     }
 
     @Test
     public void testUpdateAuthor(){
         Author author = new Author();
-        author.setFirstName("John");
-        author.setLastName("Th");
+        author.setFirstName("John1");
+        author.setLastName("Th2");
         Author savedAuthor = authorDao.save(author);
 
         savedAuthor.setLastName("Thompson");
@@ -64,8 +69,11 @@ public class AuthorDaoIntegrationTest {
         Author author = new Author();
         author.setFirstName("Steve");
         author.setLastName("Harvey");
+
         Author savedAuthor = authorDao.save(author);
+
         authorDao.delete(savedAuthor.getId());
+
         assertThat(authorDao.getById(savedAuthor.getId())).isNull();
     }
 }
