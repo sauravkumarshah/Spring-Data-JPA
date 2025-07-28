@@ -63,7 +63,7 @@ public class BookDaoIntegrationTest {
         book.setTitle("The Lord of the Rongs");
         book.setIsbn("123456789");
         book.setPublisher("Penguin");
-        book.setAuthorId(author.getId());
+        book.setAuthor(author);
 
         Book savedBook = bookDao.save(book);
         assertThat(savedBook.getId()).isNotNull();

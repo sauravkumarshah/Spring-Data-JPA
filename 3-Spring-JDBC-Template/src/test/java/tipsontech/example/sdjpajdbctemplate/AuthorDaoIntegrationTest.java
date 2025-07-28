@@ -74,8 +74,6 @@ public class AuthorDaoIntegrationTest {
 
         authorDao.delete(savedAuthor.getId());
 
-        assertThrows(TransientDataAccessResourceException.class, () -> {
-                authorDao.getById(savedAuthor.getId());
-        });
+        assertThat(authorDao.getById(savedAuthor.getId())).isNull();
     }
 }

@@ -21,8 +21,7 @@ public class AuthorDaoImpl implements AuthorDao {
                 "left join book on author.id = book.author_id " +
                 "where author.id = ?";
 
-        Author query = this.jdbcTemplate.query(sql, new AuthorExtractor(), id);
-        return query;
+        return this.jdbcTemplate.query(sql, new AuthorExtractor(), id);
 //        return this.jdbcTemplate.queryForObject("SELECT * FROM author WHERE id = ?", getRowMapper(), id);
     }
 

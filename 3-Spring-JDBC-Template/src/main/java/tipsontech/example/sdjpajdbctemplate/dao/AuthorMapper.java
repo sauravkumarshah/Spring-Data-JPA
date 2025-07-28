@@ -60,7 +60,7 @@ public class AuthorMapper implements RowMapper<Author> {
                 book.setTitle(rs.getString("title"));
                 book.setIsbn(rs.getString("isbn"));
                 book.setPublisher(rs.getString("publisher"));
-                book.setAuthorId(rs.getLong("id"));
+                book.setAuthor(author);  // Set the author object instead of authorId
                 books.add(book);
             } while (rs.next() && rs.getLong("id") == author.getId());
 
