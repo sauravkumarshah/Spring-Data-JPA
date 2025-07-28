@@ -20,17 +20,14 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public Author getById(Long id) {
         Connection conn = null;
-//        Statement stmt = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             conn = datasource.getConnection();
-//            stmt = conn.createStatement();
             ps = conn.prepareStatement("SELECT * FROM Author where id = ?");
             ps.setLong(1, id);
             rs = ps.executeQuery();
-//            rs = stmt.executeQuery("SELECT * FROM Author where id = " + id);
 
             if (rs.next()) {
                 Author author = new Author();
@@ -43,37 +40,61 @@ public class AuthorDaoImpl implements AuthorDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            if (rs != null) {
-                try {
+            try {
+                if (rs != null) {
                     rs.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
-            }
-//            if (stmt != null) {
-//                try {
-//                    stmt.close();
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-
-            if (ps != null) {
-                try {
+                if (ps != null) {
                     ps.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
-            }
-            if (conn != null) {
-                try {
+                if (conn != null) {
                     conn.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
+        return null;
+    }
+
+    @Override
+    public Author getByName(String firstName, String lastName) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = datasource.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM Author where first_name = ? and last_name = ?");
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Author author = new Author();
+                author.setId(rs.getLong("id"));
+                author.setFirstName(rs.getString("first_name"));
+                author.setLastName(rs.getString("last_name"));
+                return author;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return null;
     }
 }

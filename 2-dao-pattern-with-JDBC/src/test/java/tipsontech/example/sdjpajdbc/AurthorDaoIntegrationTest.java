@@ -28,6 +28,13 @@ public class AurthorDaoIntegrationTest {
     public void testGetAuthor(){
         Author author = authorDao.getById(1L);
         assertThat(author).isNotNull();
+    }
 
+    @Test
+    public void testGetAuthorByName(){
+        Author author = authorDao.getByName("John", "Doe");
+        assertThat(author).isNotNull();
+        assertThat(author.getFirstName()).isEqualTo("John");
+        assertThat(author.getLastName()).isEqualTo("Doe");
     }
 }
