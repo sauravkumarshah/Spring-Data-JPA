@@ -3,7 +3,7 @@ package tipsontech.example.sdjpajdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tipsontech.example.sdjpajdbc.repositories.BookRepository;
+import tipsontech.example.sdjpajdbc.repositories.AuthorRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -11,11 +11,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class SdjpaJDBCTemplateApplicationTests {
 
 	@Autowired
-	BookRepository bookRepository;
+	AuthorRepository authorRepository;
 
 	@Test
 	void testBookRepository() {
-		long count = bookRepository.count();
+		long count = authorRepository.count();
 
 		assertThat(count).isGreaterThan(0);
 	}

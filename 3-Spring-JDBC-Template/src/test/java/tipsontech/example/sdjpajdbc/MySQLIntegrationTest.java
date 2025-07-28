@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.sdjpajdbc.repositories.BookRepository;
+import tipsontech.example.sdjpajdbc.repositories.AuthorRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -15,11 +15,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class MySQLIntegrationTest {
 
     @Autowired
-    private BookRepository bookRepository;
+    private AuthorRepository authorRepository;
 
     @Test
     void testMySQL() {
-        long count = bookRepository.count();
+        long count = authorRepository.count();
         assertThat(count).isGreaterThan(0);
     }
 }
