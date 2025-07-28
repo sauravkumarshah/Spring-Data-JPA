@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpajdbc.dao.AuthorDao;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 //@ComponentScan(basePackages = {"tipsontech.example.sdjpajdbc.dao"})
 @Import(AuthorDaoImpl.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class AurthorDaoIntegrationTest {
+public class AuthorDaoIntegrationTest {
 
 
     @Autowired
