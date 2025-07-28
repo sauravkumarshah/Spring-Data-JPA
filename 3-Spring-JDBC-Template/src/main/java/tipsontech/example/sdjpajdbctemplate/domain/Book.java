@@ -18,16 +18,15 @@ public class Book {
     private String isbn;
     private String publisher;
 
-    @Transient
-    private Author author;
+    private Long authorId;
 
     public Book() { }
 
-    public Book(String title, String isbn, String publisher, Author author) {
+    public Book(String title, String isbn, String publisher, Long authorId) {
         this.title = title;
         this.isbn = isbn;
         this.publisher = publisher;
-        this.author = author;
+        this.authorId = authorId;
     }
 
     @Override
@@ -74,11 +73,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
