@@ -14,7 +14,7 @@ class SdjpaJDBCTemplateApplicationTests {
 	AuthorRepository authorRepository;
 
 	@Test
-	void testBookRepository() {
+	void testAuthorRepository() {
 		long count = authorRepository.count();
 
 		assertThat(count).isGreaterThan(0);
