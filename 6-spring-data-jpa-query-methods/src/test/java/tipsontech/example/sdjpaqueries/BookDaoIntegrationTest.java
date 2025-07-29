@@ -63,7 +63,7 @@ public class BookDaoIntegrationTest {
 
     @Test
     public void testGetBookByTitle(){
-        Book author = bookDao.getByTitle("Spring In Action");
+        Book author = bookDao.getBookByTitle("Spring In Action");
         assertThat(author).isNotNull();
         assertThat(author.getTitle()).isEqualTo("Spring In Action");
     }
@@ -71,7 +71,7 @@ public class BookDaoIntegrationTest {
     @Test
     public void testGetBookByTitleNotFound(){
         assertThrows(EntityNotFoundException.class, () -> {
-            bookDao.getByTitle("Spring In Action 2");
+            bookDao.getBookByTitle("Spring In Action 2");
         });
     }
 

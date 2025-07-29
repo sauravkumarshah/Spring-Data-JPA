@@ -11,5 +11,5 @@ public interface BookDao {
     Book update(Book book);
     void delete(Long id);
     Book getById(Long id);
-    Book getByTitle(String title);
+    Book getBookByTitle(String title);
 }

@@ -53,7 +53,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book getByTitle(String title) {
+    public Book getBookByTitle(String title) {
         Optional<Book> byTitle = bookRepository.findByTitle(title);
         return byTitle.orElseThrow(EntityNotFoundException::new);
     }
