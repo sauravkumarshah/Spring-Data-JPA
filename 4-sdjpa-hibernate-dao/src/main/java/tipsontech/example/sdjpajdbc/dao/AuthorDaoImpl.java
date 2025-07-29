@@ -2,12 +2,9 @@ package tipsontech.example.sdjpajdbc.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbc.domain.Author;
-
-import javax.sql.DataSource;
-import java.sql.*;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
@@ -25,7 +22,10 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author getByName(String firstName, String lastName) {
-        return null;
+        TypedQuery<Author> query = getEntityManager().createQuery("select a from Author a where a.firstName = :firstName and a.lastName = :lastName", Author.class);
+        query.setParameter("firstName", firstName);
+        query.setParameter("lastName", lastName);
+        return query.getSingleResult();
     }
 
     @Override
