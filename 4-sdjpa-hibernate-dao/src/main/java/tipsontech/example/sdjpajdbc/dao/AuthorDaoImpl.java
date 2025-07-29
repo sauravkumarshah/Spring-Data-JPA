@@ -30,9 +30,9 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author save(Author author) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.persist(author);
-        return author;
+//        EntityManager entityManager = getEntityManager();
+//        entityManager.persist(author);
+//        return author;
 
 //        EntityManager entityManager = getEntityManager();
 //        entityManager.getTransaction().begin(); // To start the transaction
@@ -46,13 +46,13 @@ public class AuthorDaoImpl implements AuthorDao {
 //        entityManager.flush();
 //        return author;
 
-//        EntityManager entityManager = getEntityManager();
-//        entityManager.getTransaction().begin();
-//        entityManager.joinTransaction();
-//        entityManager.persist(author);
-//        entityManager.flush();
-//        entityManager.getTransaction().commit();
-//        return author;
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.joinTransaction();
+        entityManager.persist(author);
+        entityManager.flush();
+        entityManager.getTransaction().commit();
+        return author;
     }
 
     @Override
