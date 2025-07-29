@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpajdbc;
+package tipsontech.example.sdjpahibernate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,12 +6,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.sdjpajdbc.dao.AuthorDao;
-import tipsontech.example.sdjpajdbc.dao.AuthorDaoImpl;
-import tipsontech.example.sdjpajdbc.dao.BookDao;
-import tipsontech.example.sdjpajdbc.dao.BookDaoImpl;
-import tipsontech.example.sdjpajdbc.domain.Author;
-import tipsontech.example.sdjpajdbc.domain.Book;
+import tipsontech.example.sdjpahibernate.dao.AuthorDao;
+import tipsontech.example.sdjpahibernate.dao.AuthorDaoImpl;
+import tipsontech.example.sdjpahibernate.dao.BookDao;
+import tipsontech.example.sdjpahibernate.dao.BookDaoImpl;
+import tipsontech.example.sdjpahibernate.domain.Author;
+import tipsontech.example.sdjpahibernate.domain.Book;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

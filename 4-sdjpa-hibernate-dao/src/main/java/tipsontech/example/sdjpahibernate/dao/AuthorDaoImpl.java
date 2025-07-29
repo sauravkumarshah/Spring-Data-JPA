@@ -1,10 +1,10 @@
-package tipsontech.example.sdjpajdbc.dao;
+package tipsontech.example.sdjpahibernate.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
-import tipsontech.example.sdjpajdbc.domain.Author;
+import tipsontech.example.sdjpahibernate.domain.Author;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {

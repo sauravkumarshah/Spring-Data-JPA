@@ -1,6 +1,6 @@
-package tipsontech.example.sdjpajdbc.dao;
+package tipsontech.example.sdjpahibernate.dao;
 
-import tipsontech.example.sdjpajdbc.domain.Book;
+import tipsontech.example.sdjpahibernate.domain.Book;
 
 public interface BookDao {
     Book save(Book book);
