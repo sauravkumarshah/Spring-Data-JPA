@@ -21,9 +21,9 @@ public class BookDaoImpl implements BookDao {
     public Book findByISBN(String isbn) {
         EntityManager entityManager = getEntityManager();
         try{
-            Query query = entityManager.createQuery("select b from Book b where b.isbn = :isbn", Book.class);
+            TypedQuery<Book> query = entityManager.createQuery("select b from Book b where b.isbn = :isbn", Book.class);
             query.setParameter("isbn", isbn);
-            return (Book) query.getSingleResult();
+            return query.getSingleResult();
         } finally {
             entityManager.close();
         }
