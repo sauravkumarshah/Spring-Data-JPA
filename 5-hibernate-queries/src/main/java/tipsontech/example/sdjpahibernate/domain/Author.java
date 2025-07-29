@@ -1,10 +1,14 @@
 package tipsontech.example.sdjpahibernate.domain;
 
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 
 import java.util.Objects;
 
-@NamedQuery(name = "author_find_all", query = "FROM Author")
+@NamedQueries({
+        @NamedQuery(name = "author_find_all", query = "FROM Author"),
+        @NamedQuery(name = "find_by_name", query = "FROM Author a WHERE a.firstName = :firstName and a.lastName = :lastName")
+})
 @Entity
 public class Author {
 
