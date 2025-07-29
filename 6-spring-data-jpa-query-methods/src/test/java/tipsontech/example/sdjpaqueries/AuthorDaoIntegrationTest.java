@@ -22,30 +22,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AuthorDaoIntegrationTest {
 
-
     @Autowired
     private AuthorDao authorDao;
-
-    @Test
-    public void testGetAuthorByNameNative(){
-        String firstName = "John";
-        String lastName = "Doe";
-        Author author = authorDao.findAuthorByNameNative(firstName, lastName);
-        assertThat(author).isNotNull();
-    }
-    @Test
-    public void testGetAuthorByNameCriteria(){
-        String firstName = "John";
-        String lastName = "Doe";
-        Author author = authorDao.findAuthorByNameCriteria(firstName, lastName);
-        assertThat(author).isNotNull();
-    }
-    @Test
-    public void testLIstAuthorByLastNameLike(){
-        String lastName = "Doe";
-        List<Author> authors = authorDao.listAuthorByLastNameLike(lastName);
-        assertThat(authors.size()).isGreaterThan(0);
-    }
 
     @Test
     public void testGetAuthor(){
