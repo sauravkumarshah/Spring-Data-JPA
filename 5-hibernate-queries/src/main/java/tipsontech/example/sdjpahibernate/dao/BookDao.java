@@ -14,4 +14,6 @@ public interface BookDao {
     Book getByTitle(String title);
 
     Book findBookByTitleCriteria(String springInAction);
+
+    Book findBookByTitleNative(String springInAction);
 }
