@@ -1,5 +1,7 @@
 package tipsontech.example.sdjpajdbc.dao;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbc.domain.Author;
@@ -10,10 +12,15 @@ import java.sql.*;
 @Component
 public class AuthorDaoImpl implements AuthorDao {
 
+    private final EntityManagerFactory entityManagerFactory;
+
+    public AuthorDaoImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
     @Override
     public Author getById(Long id) {
-        return null;
+        return getEntityManager().find(Author.class, id);
     }
 
     @Override
@@ -34,5 +41,9 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void delete(Long id) {
 
+    }
+
+    private EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager();
     }
 }
