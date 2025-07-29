@@ -120,11 +120,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book findBookByTitleNative(String springInAction) {
+    public Book findBookByTitleNative(String title) {
         EntityManager entityManager = getEntityManager();
         try{
             Query query = entityManager.createNativeQuery("select * from book where title = ?", Book.class);
-            query.setParameter(1, springInAction);
+            query.setParameter(1, title);
             return (Book) query.getSingleResult();
         }finally {
             entityManager.close();
