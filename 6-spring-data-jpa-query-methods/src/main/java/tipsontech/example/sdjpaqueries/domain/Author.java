@@ -1,7 +1,6 @@
-package tipsontech.example.sdjpahibernate.domain;
+package tipsontech.example.sdjpaqueries.domain;
 
 import jakarta.persistence.*;
-import jdk.jfr.Name;
 
 import java.util.Objects;
 

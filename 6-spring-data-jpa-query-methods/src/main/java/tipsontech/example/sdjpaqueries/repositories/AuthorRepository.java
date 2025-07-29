@@ -1,7 +1,7 @@
-package tipsontech.example.sdjpahibernate.repositories;
+package tipsontech.example.sdjpaqueries.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tipsontech.example.sdjpahibernate.domain.Author;
+import tipsontech.example.sdjpaqueries.domain.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 }

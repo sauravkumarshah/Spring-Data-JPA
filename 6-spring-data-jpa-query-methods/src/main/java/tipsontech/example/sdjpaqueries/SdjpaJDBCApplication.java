@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpahibernate;
+package tipsontech.example.sdjpaqueries;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

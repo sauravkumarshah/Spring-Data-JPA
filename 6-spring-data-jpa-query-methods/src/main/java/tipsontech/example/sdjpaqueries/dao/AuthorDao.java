@@ -1,6 +1,6 @@
-package tipsontech.example.sdjpahibernate.dao;
+package tipsontech.example.sdjpaqueries.dao;
 
-import tipsontech.example.sdjpahibernate.domain.Author;
+import tipsontech.example.sdjpaqueries.domain.Author;
 
 import java.util.List;
 

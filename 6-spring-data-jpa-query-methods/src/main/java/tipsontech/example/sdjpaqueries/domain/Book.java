@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpahibernate.domain;
+package tipsontech.example.sdjpaqueries.domain;
 
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpahibernate;
+package tipsontech.example.sdjpaqueries;
 
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
@@ -7,12 +7,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.sdjpahibernate.dao.AuthorDao;
-import tipsontech.example.sdjpahibernate.dao.AuthorDaoImpl;
-import tipsontech.example.sdjpahibernate.dao.BookDao;
-import tipsontech.example.sdjpahibernate.dao.BookDaoImpl;
-import tipsontech.example.sdjpahibernate.domain.Author;
-import tipsontech.example.sdjpahibernate.domain.Book;
+import tipsontech.example.sdjpaqueries.dao.AuthorDao;
+import tipsontech.example.sdjpaqueries.dao.AuthorDaoImpl;
+import tipsontech.example.sdjpaqueries.dao.BookDao;
+import tipsontech.example.sdjpaqueries.dao.BookDaoImpl;
+import tipsontech.example.sdjpaqueries.domain.Author;
+import tipsontech.example.sdjpaqueries.domain.Book;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package tipsontech.example.sdjpahibernate;
+package tipsontech.example.sdjpaqueries;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tipsontech.example.sdjpahibernate.repositories.BookRepository;
+import tipsontech.example.sdjpaqueries.repositories.BookRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

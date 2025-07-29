@@ -1,4 +1,4 @@
-package tipsontech.example.sdjpahibernate.dao;
+package tipsontech.example.sdjpaqueries.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -6,7 +6,7 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Component;
-import tipsontech.example.sdjpahibernate.domain.Author;
+import tipsontech.example.sdjpaqueries.domain.Author;
 
 import java.util.List;
 
