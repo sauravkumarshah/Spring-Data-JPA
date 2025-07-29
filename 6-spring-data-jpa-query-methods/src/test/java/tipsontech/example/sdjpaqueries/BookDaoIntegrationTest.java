@@ -1,5 +1,6 @@
 package tipsontech.example.sdjpaqueries;
 
+import jakarta.persistence.EntityNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import tipsontech.example.sdjpaqueries.domain.Book;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ActiveProfiles("local")
@@ -32,33 +34,12 @@ public class BookDaoIntegrationTest {
     @Autowired
     private AuthorDao authorDao;
 
-    @Test
-    public void testfindBookByTitleNative(){
-        Book book = bookDao.findBookByTitleNative("Spring In Action");
-        assertThat(book).isNotNull();
-        assertThat(book.getTitle()).isEqualTo("Spring In Action");
-    }
-
-    @Test
-    public void testfindBookByTitleCriteria(){
-        Book book = bookDao.findBookByTitleCriteria("Spring In Action");
-        assertThat(book).isNotNull();
-        assertThat(book.getTitle()).isEqualTo("Spring In Action");
-    }
 
     @Test
     public void testFindAllBooks(){
         List<Book> books = bookDao.findAll();
         assertThat(books).isNotNull();
         assertThat(books.size()).isGreaterThan(0);
-    }
-
-    @Test
-    public void testFindAllAuthors(){
-        List<Author> authors = authorDao.findAll();
-
-        assertThat(authors).isNotNull();
-        assertThat(authors.size()).isGreaterThan(0);
     }
 
     @Test
@@ -85,6 +66,13 @@ public class BookDaoIntegrationTest {
         Book author = bookDao.getByTitle("Spring In Action");
         assertThat(author).isNotNull();
         assertThat(author.getTitle()).isEqualTo("Spring In Action");
+    }
+
+    @Test
+    public void testGetBookByTitleNotFound(){
+        assertThrows(EntityNotFoundException.class, () -> {
+            bookDao.getByTitle("Spring In Action 2");
+        });
     }
 
     @Test

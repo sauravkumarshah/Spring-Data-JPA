@@ -12,8 +12,4 @@ public interface BookDao {
     void delete(Long id);
     Book getById(Long id);
     Book getByTitle(String title);
-
-    Book findBookByTitleCriteria(String springInAction);
-
-    Book findBookByTitleNative(String title);
 }

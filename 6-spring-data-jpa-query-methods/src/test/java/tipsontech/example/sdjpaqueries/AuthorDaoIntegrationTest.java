@@ -28,6 +28,14 @@ public class AuthorDaoIntegrationTest {
     private AuthorDao authorDao;
 
     @Test
+    public void testFindAllAuthors(){
+        List<Author> authors = authorDao.findAll();
+
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThan(0);
+    }
+
+    @Test
     public void testGetAuthor(){
         Author author = authorDao.getById(1L);
         assertThat(author).isNotNull();
@@ -46,8 +54,6 @@ public class AuthorDaoIntegrationTest {
         assertThrows(EntityNotFoundException.class, () -> {
             Author author = authorDao.getByName("Jonny", "Gaddar");
         });
-
-
     }
 
     @Test

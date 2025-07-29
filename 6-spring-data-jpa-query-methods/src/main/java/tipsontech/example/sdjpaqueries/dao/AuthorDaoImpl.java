@@ -20,7 +20,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public List<Author> findAll() {
-        return null;
+        return authorRepository.findAll();
     }
 
     @Override
