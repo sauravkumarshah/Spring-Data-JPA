@@ -123,8 +123,11 @@ public class BookDaoImpl implements BookDao {
     public Book findBookByTitleNative(String title) {
         EntityManager entityManager = getEntityManager();
         try{
-            Query query = entityManager.createNativeQuery("select * from book where title = ?", Book.class);
-            query.setParameter(1, title);
+//            Query query = entityManager.createNativeQuery("select * from book where title = ?", Book.class);
+//            query.setParameter(1, title);
+
+            Query query = entityManager.createNativeQuery("select * from book where title = :title", Book.class);
+            query.setParameter("title", title);
             return (Book) query.getSingleResult();
         }finally {
             entityManager.close();
