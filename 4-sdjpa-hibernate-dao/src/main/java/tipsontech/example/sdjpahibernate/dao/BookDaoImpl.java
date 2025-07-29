@@ -22,17 +22,19 @@ public class BookDaoImpl implements BookDao {
         entityManager.getTransaction().begin();
         entityManager.persist(book);
         entityManager.getTransaction().commit();
+        entityManager.close();
         return book;
     }
 
     @Override
     public Book update(Book book) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.joinTransaction();
-        entityManager.merge(book);
-        entityManager.flush();
-        entityManager.clear();
-        return book;
+        try (EntityManager entityManager = getEntityManager()) {
+            entityManager.getTransaction().begin();
+            Book mergedBook = entityManager.merge(book);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+            return mergedBook;
+        }
     }
 
     @Override
@@ -42,18 +44,25 @@ public class BookDaoImpl implements BookDao {
         Book book = entityManager.find(Book.class, id);
         entityManager.remove(book);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
     public Book getById(Long id) {
-        return getEntityManager().find(Book.class, id);
+        EntityManager entityManager = getEntityManager();
+        Book book = getEntityManager().find(Book.class, id);
+        entityManager.close();
+        return book;
     }
 
     @Override
     public Book getByTitle(String title) {
+        EntityManager entityManager = getEntityManager();
         TypedQuery<Book> query = getEntityManager().createQuery("select b from Book b where b.title = :title", Book.class);
         query.setParameter("title", title);
-        return query.getSingleResult();
+        Book book = query.getSingleResult();
+        entityManager.close();
+        return book;
     }
 
     private EntityManager getEntityManager() {

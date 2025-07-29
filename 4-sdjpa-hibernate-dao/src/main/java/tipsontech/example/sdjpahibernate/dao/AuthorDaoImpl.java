@@ -17,15 +17,21 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author getById(Long id) {
-        return getEntityManager().find(Author.class, id);
+        EntityManager entityManager = getEntityManager();
+        Author author = getEntityManager().find(Author.class, id);
+        entityManager.close();
+        return author;
     }
 
     @Override
     public Author getByName(String firstName, String lastName) {
+        EntityManager entityManager = getEntityManager();
         TypedQuery<Author> query = getEntityManager().createQuery("select a from Author a where a.firstName = :firstName and a.lastName = :lastName", Author.class);
         query.setParameter("firstName", firstName);
         query.setParameter("lastName", lastName);
-        return query.getSingleResult();
+        Author author = query.getSingleResult();
+        entityManager.close();
+        return author;
     }
 
     @Override
@@ -52,17 +58,19 @@ public class AuthorDaoImpl implements AuthorDao {
         entityManager.persist(author);
         entityManager.flush();
         entityManager.getTransaction().commit();
+        entityManager.close();
         return author;
     }
 
     @Override
     public Author update(Author author) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.joinTransaction();
-        entityManager.merge(author);
-        entityManager.flush();
-        entityManager.clear();
-        return entityManager.find(Author.class, author.getId());
+        try (EntityManager entityManager = getEntityManager()) {
+            entityManager.getTransaction().begin();
+            Author mergedAuthor = entityManager.merge(author);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+            return mergedAuthor;
+        }
     }
 
     @Override
@@ -73,6 +81,7 @@ public class AuthorDaoImpl implements AuthorDao {
         entityManager.remove(author);
         entityManager.flush();
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     private EntityManager getEntityManager() {
