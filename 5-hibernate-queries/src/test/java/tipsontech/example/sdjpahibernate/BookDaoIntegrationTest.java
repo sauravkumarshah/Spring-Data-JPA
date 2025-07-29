@@ -14,6 +14,8 @@ import tipsontech.example.sdjpahibernate.dao.BookDaoImpl;
 import tipsontech.example.sdjpahibernate.domain.Author;
 import tipsontech.example.sdjpahibernate.domain.Book;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
@@ -29,6 +31,14 @@ public class BookDaoIntegrationTest {
 
     @Autowired
     private AuthorDao authorDao;
+
+    @Test
+    public void testFindAllAuthors(){
+        List<Author> authors = authorDao.findAll();
+
+        assertThat(authors).isNotNull();
+        assertThat(authors.size()).isGreaterThan(0);
+    }
 
     @Test
     public void testFindBookByISBN(){
