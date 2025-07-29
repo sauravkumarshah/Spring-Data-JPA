@@ -50,13 +50,13 @@ public class AuthorDaoIntegrationTest {
     @Test
     public void testUpdateAuthor(){
         Author author = new Author();
-        author.setFirstName("John");
-        author.setLastName("Th");
+        author.setFirstName("Steve");
+        author.setLastName("Smth");
         Author savedAuthor = authorDao.save(author);
 
-        savedAuthor.setLastName("Thompson");
+        savedAuthor.setLastName("Smith");
         Author  updatedAuthor = authorDao.update(savedAuthor);
-        assertThat(updatedAuthor.getLastName()).isEqualTo("Thompson");
+        assertThat(updatedAuthor.getLastName()).isEqualTo("Smith");
     }
 
     @Test
