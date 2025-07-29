@@ -1,11 +1,13 @@
 package tipsontech.example.sdjpaqueries.dao;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpaqueries.domain.Author;
 import tipsontech.example.sdjpaqueries.repositories.AuthorRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
@@ -28,7 +30,8 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author getByName(String firstName, String lastName) {
-        return authorRepository.findByFirstNameAndLastName(firstName, lastName);
+        Optional<Author> byFirstNameAndLastName = authorRepository.findByFirstNameAndLastName(firstName, lastName);
+        return byFirstNameAndLastName.orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

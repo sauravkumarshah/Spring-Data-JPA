@@ -1,5 +1,6 @@
 package tipsontech.example.sdjpaqueries;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,6 +14,7 @@ import tipsontech.example.sdjpaqueries.domain.Author;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ActiveProfiles("local")
@@ -37,6 +39,15 @@ public class AuthorDaoIntegrationTest {
         assertThat(author).isNotNull();
         assertThat(author.getFirstName()).isEqualTo("John");
         assertThat(author.getLastName()).isEqualTo("Doe");
+    }
+
+    @Test
+    public void testGetAuthorByNameNotFound(){
+        assertThrows(EntityNotFoundException.class, () -> {
+            Author author = authorDao.getByName("Jonny", "Gaddar");
+        });
+
+
     }
 
     @Test
