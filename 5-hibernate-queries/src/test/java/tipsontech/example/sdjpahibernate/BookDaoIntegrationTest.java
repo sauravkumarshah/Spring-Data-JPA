@@ -33,6 +33,13 @@ public class BookDaoIntegrationTest {
     private AuthorDao authorDao;
 
     @Test
+    public void testFindAllBooks(){
+        List<Book> books = bookDao.findAll();
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
+
+    @Test
     public void testFindAllAuthors(){
         List<Author> authors = authorDao.findAll();
 

@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  * Created by @tipsontech.
  */
+@NamedQuery(name = "find_all_books", query = "select b from Book b")
 @Entity
 public class Book {
 

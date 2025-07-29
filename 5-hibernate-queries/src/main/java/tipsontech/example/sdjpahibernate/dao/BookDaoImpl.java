@@ -2,10 +2,11 @@ package tipsontech.example.sdjpahibernate.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpahibernate.domain.Book;
+
+import java.util.List;
 
 @Component
 public class BookDaoImpl implements BookDao {
@@ -16,6 +17,17 @@ public class BookDaoImpl implements BookDao {
         this.entityManagerFactory = entityManagerFactory;
     }
 
+
+    @Override
+    public List<Book> findAll() {
+        EntityManager entityManager = getEntityManager();
+        try{
+            TypedQuery<Book> query = entityManager.createNamedQuery("find_all_books", Book.class);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
 
     @Override
     public Book findByISBN(String isbn) {
