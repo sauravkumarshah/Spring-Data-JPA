@@ -1,37 +1,62 @@
 package tipsontech.example.sdjpajdbc.dao;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbc.domain.Book;
-
-import javax.sql.DataSource;
-import java.sql.*;
 
 @Component
 public class BookDaoImpl implements BookDao {
 
+    private final EntityManagerFactory entityManagerFactory;
+
+    public BookDaoImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
 
     @Override
     public Book save(Book book) {
-        return null;
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(book);
+        entityManager.getTransaction().commit();
+        return book;
     }
 
     @Override
     public Book update(Book book) {
-        return null;
+        EntityManager entityManager = getEntityManager();
+        entityManager.joinTransaction();
+        entityManager.merge(book);
+        entityManager.flush();
+        entityManager.clear();
+        return book;
     }
 
     @Override
     public void delete(Long id) {
-
+        EntityManager entityManager = getEntityManager();
+        entityManager.getTransaction().begin();
+        Book book = entityManager.find(Book.class, id);
+        entityManager.remove(book);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public Book getById(Long id) {
-        return null;
+        return getEntityManager().find(Book.class, id);
     }
 
     @Override
     public Book getByTitle(String title) {
-        return null;
+        TypedQuery<Book> query = getEntityManager().createQuery("select b from Book b where b.title = :title", Book.class);
+        query.setParameter("title", title);
+        return query.getSingleResult();
+    }
+
+    private EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager();
     }
 }
