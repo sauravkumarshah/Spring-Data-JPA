@@ -1,5 +1,6 @@
 package tipsontech.example.sdjpahibernate;
 
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,6 +29,19 @@ public class BookDaoIntegrationTest {
 
     @Autowired
     private AuthorDao authorDao;
+
+    @Test
+    public void testFindBookByISBN(){
+        Book book = new Book();
+        book.setIsbn("1234" + RandomString.make());
+        book.setTitle("The ISBN test book");
+        book.setPublisher("Penguin");
+
+        Book savedBook = bookDao.save(book);
+
+        Book foundBook = bookDao.findByISBN(savedBook.getIsbn());
+        assertThat(foundBook).isNotNull();
+    }
 
     @Test
     public void testGetBook(){
