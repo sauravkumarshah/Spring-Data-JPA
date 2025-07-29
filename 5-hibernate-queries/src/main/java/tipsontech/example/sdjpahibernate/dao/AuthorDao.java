@@ -12,4 +12,6 @@ public interface AuthorDao {
     Author save(Author author);
     Author update(Author author);
     void delete(Long id);
+
+    Author findAuthorByNameCriteria(String firstName, String lastName);
 }

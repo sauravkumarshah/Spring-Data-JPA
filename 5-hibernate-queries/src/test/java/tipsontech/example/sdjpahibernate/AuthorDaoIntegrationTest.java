@@ -27,6 +27,13 @@ public class AuthorDaoIntegrationTest {
     private AuthorDao authorDao;
 
     @Test
+    public void testGetAuthorByNameCriteria(){
+        String firstName = "John";
+        String lastName = "Doe";
+        Author author = authorDao.findAuthorByNameCriteria(firstName, lastName);
+        assertThat(author).isNotNull();
+    }
+    @Test
     public void testLIstAuthorByLastNameLike(){
         String lastName = "Doe";
         List<Author> authors = authorDao.listAuthorByLastNameLike(lastName);
