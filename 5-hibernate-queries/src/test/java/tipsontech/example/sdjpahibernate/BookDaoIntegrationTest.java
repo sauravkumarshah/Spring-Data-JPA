@@ -33,6 +33,13 @@ public class BookDaoIntegrationTest {
     private AuthorDao authorDao;
 
     @Test
+    public void testfindBookByTitleCriteria(){
+        Book book = bookDao.findBookByTitleCriteria("Spring In Action");
+        assertThat(book).isNotNull();
+        assertThat(book.getTitle()).isEqualTo("Spring In Action");
+    }
+
+    @Test
     public void testFindAllBooks(){
         List<Book> books = bookDao.findAll();
         assertThat(books).isNotNull();

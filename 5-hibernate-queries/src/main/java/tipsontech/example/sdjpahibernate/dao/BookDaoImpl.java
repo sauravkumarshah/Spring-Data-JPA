@@ -3,6 +3,7 @@ package tipsontech.example.sdjpahibernate.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpahibernate.domain.Book;
 
@@ -91,6 +92,30 @@ public class BookDaoImpl implements BookDao {
             entityManager.close();
         }
 
+    }
+
+    @Override
+    public Book findBookByTitleCriteria(String springInAction) {
+        EntityManager entityManager = getEntityManager();
+        try{
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+            Root<Book> root = criteriaQuery.from(Book.class);
+
+            ParameterExpression<String> titleParam = criteriaBuilder.parameter(String.class, "springInAction");
+
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("title"), titleParam));
+
+            Predicate titlePredicate = criteriaBuilder.equal(root.get("title"), titleParam);
+
+            criteriaQuery.select(root).where(titlePredicate);
+            TypedQuery<Book> typedQuery = entityManager.createQuery(criteriaQuery);
+            typedQuery.setParameter(titleParam, springInAction);
+            return typedQuery.getSingleResult();
+
+        }finally {
+            entityManager.close();
+        }
     }
 
     private EntityManager getEntityManager() {
