@@ -20,7 +20,13 @@ public class AuthorDaoHibernate implements AuthorDao {
     public List<Author> findAuthorByLastName(String lastName, Pageable pageable) {
         EntityManager entityManager = getEntityManager();
         try {
-            TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.lastName = :lastName", Author.class);
+            String hql = "select a from Author a where a.lastName = :lastName";
+
+            if(pageable.getSort().getOrderFor("firstName") != null) {
+                hql += " order by a.firstName " + pageable.getSort().getOrderFor("firstname").getDirection().name();
+            }
+
+            TypedQuery<Author> query = entityManager.createQuery(hql, Author.class);
             query.setParameter("lastName", lastName);
             query.setFirstResult(Math.toIntExact(pageable.getOffset()));
             query.setMaxResults(pageable.getPageSize());

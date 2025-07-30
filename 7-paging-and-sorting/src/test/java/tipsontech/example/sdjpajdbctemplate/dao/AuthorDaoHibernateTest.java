@@ -47,7 +47,7 @@ public class AuthorDaoHibernateTest {
         List<Author> authors = authorDao.findAuthorByLastName("Smith", PageRequest.of(0, 10, Sort.by(Sort.Order.desc("firstname"))));
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isEqualTo(10);
-        assertThat(authors.get(0).getFirstName()).isEqualTo("John");
+        assertThat(authors.get(0).getFirstName()).isEqualTo("William");
     }
 
     @Test
@@ -55,7 +55,7 @@ public class AuthorDaoHibernateTest {
         List<Author> authors = authorDao.findAuthorByLastName("Smith", PageRequest.of(0, 10, Sort.by(Sort.Order.asc("firstname"))));
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isEqualTo(10);
-        assertThat(authors.get(0).getFirstName()).isEqualTo("John");
+        assertThat(authors.get(0).getFirstName()).isEqualTo("Andrew");
     }
 
     @Test
