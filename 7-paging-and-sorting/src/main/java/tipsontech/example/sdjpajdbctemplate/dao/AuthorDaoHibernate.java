@@ -22,7 +22,7 @@ public class AuthorDaoHibernate implements AuthorDao {
         try {
             String hql = "select a from Author a where a.lastName = :lastName";
 
-            if(pageable.getSort().getOrderFor("firstName") != null) {
+            if(pageable.getSort().getOrderFor("firstname") != null) {
                 hql += " order by a.firstName " + pageable.getSort().getOrderFor("firstname").getDirection().name();
             }
 
