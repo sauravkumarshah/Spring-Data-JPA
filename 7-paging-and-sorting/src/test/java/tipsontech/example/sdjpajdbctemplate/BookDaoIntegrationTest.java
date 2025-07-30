@@ -1,0 +1,91 @@
+package tipsontech.example.sdjpajdbctemplate;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ActiveProfiles;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDao;
+import tipsontech.example.sdjpajdbctemplate.dao.AuthorDaoImpl;
+import tipsontech.example.sdjpajdbctemplate.dao.BookDao;
+import tipsontech.example.sdjpajdbctemplate.dao.BookDaoImpl;
+import tipsontech.example.sdjpajdbctemplate.domain.Author;
+import tipsontech.example.sdjpajdbctemplate.domain.Book;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+@ActiveProfiles("local")
+@DataJpaTest
+@ComponentScan(basePackages = {"tipsontech.example.sdjpajdbctemplate.dao"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public class BookDaoIntegrationTest {
+
+    @Autowired
+    private BookDao bookDao;
+
+    @Autowired
+    private AuthorDao authorDao;
+
+    @Test
+    public void testGetBook(){
+        Book author = bookDao.getById(1L);
+        assertThat(author).isNotNull();
+    }
+
+    @Test
+    public void testGetBookByTitle(){
+        Book author = bookDao.getByTitle("Spring In Action");
+        assertThat(author).isNotNull();
+        assertThat(author.getTitle()).isEqualTo("Spring In Action");
+    }
+
+    @Test
+    public void testSaveBook(){
+        Book book = new Book();
+        book.setTitle("The Lord of the Rings");
+        book.setIsbn("123456789");
+        book.setPublisher("Penguin");
+        Book savedBook = bookDao.save(book);
+        assertThat(savedBook.getId()).isNotNull();
+    }
+
+    @Test
+    public void testUpdateBook() {
+        Author author = authorDao.getById(1L); // Use an ID that exists in your database
+        assertThat(author).isNotNull();
+
+        Book book = new Book();
+        book.setTitle("The Lord of the Rongs");
+        book.setIsbn("123456789");
+        book.setPublisher("Penguin");
+        book.setAuthor(author);
+
+        Book savedBook = bookDao.save(book);
+        assertThat(savedBook.getId()).isNotNull();
+
+        savedBook.setTitle("The Lord of the Rings");
+        Book updatedBook = bookDao.update(savedBook);
+        assertThat(updatedBook.getTitle()).isEqualTo("The Lord of the Rings");
+    }
+
+    @Test
+    public void testDeleteBook(){
+        Book book = new Book();
+        book.setTitle("The Alchemist");
+        book.setIsbn("123456789");
+        book.setPublisher("Penguin");
+
+        Book savedBook = bookDao.save(book);
+
+        bookDao.delete(savedBook.getId());
+
+        assertThrows(EmptyResultDataAccessException.class, () -> {
+            bookDao.getById(savedBook.getId());
+        });
+    }
+}
