@@ -22,5 +22,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Stream<Book> findAllByTitleNotNull();
 
     @Async
-    Future<Book> findByTitleAsync(String title);
+    Future<Book> queryByTitle(String title);
 }

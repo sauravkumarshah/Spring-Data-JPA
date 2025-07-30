@@ -28,7 +28,7 @@ public class BookRepositoryTest {
 
     @Test
     public void testFindBookByTitleAsync() throws ExecutionException, InterruptedException {
-        Future<Book> bookFuture = bookRepository.findByTitleAsync("The Lord of the Rings");
+        Future<Book> bookFuture = bookRepository.queryByTitle("Spring In Action");
 
         Book book = bookFuture.get();
 
