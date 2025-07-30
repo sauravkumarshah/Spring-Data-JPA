@@ -27,6 +27,11 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Test
+    public void testFindBookByTitleWithQueryNamed() {
+        Book book = bookRepository.findBookByTitleWithQueryNamed("Spring In Action");
+        assertNotNull(book);
+    }
+    @Test
     public void testFindBookByTitle() {
         Book book = bookRepository.findBookByTitleWithQuery("Spring In Action");
         assertNotNull(book);
