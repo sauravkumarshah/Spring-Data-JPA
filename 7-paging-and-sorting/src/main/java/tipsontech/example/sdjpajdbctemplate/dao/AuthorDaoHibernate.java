@@ -18,17 +18,43 @@ public class AuthorDaoHibernate implements AuthorDao {
 
     @Override
     public List<Author> findAuthorByLastName(String lastName, Pageable pageable) {
-        return null;
+        EntityManager entityManager = getEntityManager();
+        try {
+            TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.lastName = :lastName", Author.class);
+            query.setParameter("lastName", lastName);
+            query.setFirstResult(Math.toIntExact(pageable.getOffset()));
+            query.setMaxResults(pageable.getPageSize());
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public List<Author> findAuthorByLastName(String lastName, int pageSize, int offset) {
-        return null;
+        EntityManager entityManager = getEntityManager();
+        try {
+            TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.lastName = :lastName", Author.class);
+            query.setParameter("lastName", lastName);
+            query.setFirstResult(offset);
+            query.setMaxResults(pageSize);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+
     }
 
     @Override
     public List<Author> findAuthorByLastName(String lastName) {
-        return null;
+        EntityManager entityManager = getEntityManager();
+        try {
+            TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.lastName = :lastName", Author.class);
+            query.setParameter("lastName", lastName);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

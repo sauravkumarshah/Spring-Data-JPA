@@ -1,5 +1,6 @@
 package tipsontech.example.sdjpajdbctemplate.dao;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 @ComponentScan(basePackages = {"tipsontech.example.sdjpajdbctemplate.dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class AuthorDaoJDBCTemplateTest {
+public class AuthorDaoHibernateTest {
 
 
     private AuthorDao authorDao;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private EntityManagerFactory entityManagerFactory;
 
     @BeforeEach
     public void setUp(){
-        authorDao = new AuthorDaoJDBCTemplate(jdbcTemplate);
+        authorDao = new AuthorDaoHibernate(entityManagerFactory);
     }
 
     @Test
@@ -46,7 +47,7 @@ public class AuthorDaoJDBCTemplateTest {
         List<Author> authors = authorDao.findAuthorByLastName("Smith", PageRequest.of(0, 10, Sort.by(Sort.Order.desc("firstname"))));
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isEqualTo(10);
-        assertThat(authors.get(0).getFirstName()).isEqualTo("William");
+        assertThat(authors.get(0).getFirstName()).isEqualTo("John");
     }
 
     @Test
@@ -54,7 +55,7 @@ public class AuthorDaoJDBCTemplateTest {
         List<Author> authors = authorDao.findAuthorByLastName("Smith", PageRequest.of(0, 10, Sort.by(Sort.Order.asc("firstname"))));
         assertThat(authors).isNotNull();
         assertThat(authors.size()).isEqualTo(10);
-        assertThat(authors.get(0).getFirstName()).isEqualTo("Andrew");
+        assertThat(authors.get(0).getFirstName()).isEqualTo("John");
     }
 
     @Test
