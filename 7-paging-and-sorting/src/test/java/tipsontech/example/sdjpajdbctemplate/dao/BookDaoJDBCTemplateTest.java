@@ -2,6 +2,7 @@ package tipsontech.example.sdjpajdbctemplate.dao;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpajdbctemplate.domain.Author;
 import tipsontech.example.sdjpajdbctemplate.domain.Book;
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,11 +23,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BookDaoJDBCTemplateTest {
     @Autowired
+    @Qualifier("bookDaoJDBCTemplate")
     private BookDao bookDao;
 
     @Autowired
     private AuthorDao authorDao;
 
+    @Test
+    public void testFindAllBooks(){
+        List<Book> books = bookDao.findAllBooks();
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
     @Test
     public void testGetBook(){
         Book author = bookDao.getById(1L);

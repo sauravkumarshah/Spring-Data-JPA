@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import tipsontech.example.sdjpajdbctemplate.domain.Book;
 
+import java.util.List;
+
 @Component
 public class BookDaoJDBCTemplate implements BookDao {
 
@@ -12,6 +14,11 @@ public class BookDaoJDBCTemplate implements BookDao {
 
     public BookDaoJDBCTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<Book> findAllBooks() {
+        return this.jdbcTemplate.query("SELECT * FROM book", getRowMapper());
     }
 
     @Override
