@@ -38,14 +38,14 @@ public class BookDaoJDBCTemplateTest {
     }
     @Test
     public void testFindAllBooksPage2_pageable(){
-        List<Book> books = bookDao.findAllBooks(PageRequest.of(10,10));
+        List<Book> books = bookDao.findAllBooks(PageRequest.of(1,10));
 
         assertThat(books).isNotNull();
         assertThat(books.size()).isEqualTo(10);
     }
     @Test
     public void testFindAllBooksPage10_pageable(){
-        List<Book> books = bookDao.findAllBooks(PageRequest.of(10,100));
+        List<Book> books = bookDao.findAllBooks(PageRequest.of(10,10));
 
         assertThat(books).isNotNull();
         assertThat(books.size()).isEqualTo(0);
