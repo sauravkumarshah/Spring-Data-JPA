@@ -27,6 +27,12 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Test
+    public void testFindBookByTitle() {
+        Book book = bookRepository.findBookByTitleWithQuery("Spring In Action");
+        assertNotNull(book);
+    }
+
+    @Test
     public void testFindBookByTitleAsync() throws ExecutionException, InterruptedException {
         Future<Book> bookFuture = bookRepository.queryByTitle("Spring In Action");
 

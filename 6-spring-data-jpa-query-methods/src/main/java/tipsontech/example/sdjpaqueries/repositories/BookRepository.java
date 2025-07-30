@@ -2,6 +2,7 @@ package tipsontech.example.sdjpaqueries.repositories;
 
 import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.scheduling.annotation.Async;
 import tipsontech.example.sdjpaqueries.domain.Book;
 
@@ -10,6 +11,9 @@ import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
+
+    @Query("SELECT b FROM Book b WHERE b.title = ?1")
+    Book findBookByTitleWithQuery(String title);
     Book findByIsbn(String isbn);
 
     Optional<Book> findByTitle(String title);
