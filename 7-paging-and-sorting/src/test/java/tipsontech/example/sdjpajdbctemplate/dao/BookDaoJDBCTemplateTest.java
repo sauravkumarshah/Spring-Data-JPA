@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpajdbctemplate.domain.Author;
@@ -28,6 +27,28 @@ public class BookDaoJDBCTemplateTest {
 
     @Autowired
     private AuthorDao authorDao;
+
+    @Test
+    public void testFindAllBooksPage1(){
+        List<Book> books = bookDao.findAllBooks(10,0);
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    @Test
+    public void testFindAllBooksPage2(){
+        List<Book> books = bookDao.findAllBooks(10,10);
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
+    }
+    @Test
+    public void testFindAllBooksPage10(){
+        List<Book> books = bookDao.findAllBooks(10,100);
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(0);
+    }
 
     @Test
     public void testFindAllBooks(){
