@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tipsontech.example</groupId>
-	<artifactId>3-Spring-JDBC-Template</artifactId>
+	<artifactId>7-paging-and-sorting-using-jdbctemplate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>3-Spring-JDBC-Template</name>
+	<name>7-paging-and-sorting-using-jdbctemplate</name>
 	<description>Introduction to Spring Data JPA</description>
 	<url/>
 	<licenses>
