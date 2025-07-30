@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  * Created by @tipsontech.
  */
+@NamedQuery(name = "Book.jpaNamed", query = "FRON Book b WHERE b.title = :title")
 @Entity
 public class Book {
 

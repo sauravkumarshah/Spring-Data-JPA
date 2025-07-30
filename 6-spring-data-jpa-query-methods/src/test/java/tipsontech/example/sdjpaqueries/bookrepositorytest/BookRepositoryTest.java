@@ -27,6 +27,12 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Test
+    public void testJpaNamed() {
+        Book book = bookRepository.jpaNamed("Spring In Action");
+        assertNotNull(book);
+    }
+
+    @Test
     public void testFindBookByTitleNativeQuery() {
         Book book = bookRepository.findBookByTitleNativeQuery("Spring In Action");
         assertNotNull(book);
