@@ -1,5 +1,6 @@
 package tipsontech.example.sdjpajdbctemplate.dao;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpajdbctemplate.domain.Author;
 import tipsontech.example.sdjpajdbctemplate.domain.Book;
@@ -23,12 +25,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ComponentScan(basePackages = {"tipsontech.example.sdjpajdbctemplate.dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BookDaoJDBCTemplateTest {
-    @Autowired
-    @Qualifier("bookDaoJDBCTemplate")
-    private BookDao bookDao;
 
     @Autowired
+    private JdbcTemplate jdbcTemplate;
+    private BookDao bookDao;
+
     private AuthorDao authorDao;
+
+    @BeforeEach
+    public void setUp(){
+        bookDao = new BookDaoJDBCTemplate(jdbcTemplate);
+        authorDao = new AuthorDaoJDBCTemplate(jdbcTemplate);
+    }
 
     @Test
     public void testFindAllBooksPage1_SortByTitle(){

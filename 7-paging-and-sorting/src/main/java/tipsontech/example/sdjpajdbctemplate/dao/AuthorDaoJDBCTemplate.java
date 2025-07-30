@@ -8,29 +8,37 @@ import tipsontech.example.sdjpajdbctemplate.domain.Author;
 
 import java.util.List;
 
-@Component
-public class AuthorDaoImpl implements AuthorDao {
+public class AuthorDaoJDBCTemplate implements AuthorDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AuthorDaoImpl(JdbcTemplate jdbcTemplate) {
+    public AuthorDaoJDBCTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
     public List<Author> findAuthorByLastName(String lastName, Pageable pageable) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT * FROM author WHERE last_name = ? ");
+
+        if(pageable.getSort().getOrderFor("firstname") != null) {
+            sb.append("ORDER BY first_name ").append(pageable.getSort().getOrderFor("firstname").getDirection().name());
+        }
+
+        sb.append(" LIMIT ? OFFSET ?");
+
+        return this.jdbcTemplate.query(sb.toString(), getRowMapper(), lastName, pageable.getPageSize(), pageable.getOffset());
     }
 
     @Override
     public List<Author> findAuthorByLastName(String lastName, int pageSize, int offset) {
-        return null;
+        return this.jdbcTemplate.query("SELECT * FROM author WHERE last_name = ? ORDER BY first_name LIMIT ? OFFSET ?", getRowMapper(), lastName, pageSize, offset);
     }
 
     @Override
     public List<Author> findAuthorByLastName(String lastName) {
-        return null;
+        return this.jdbcTemplate.query("SELECT * FROM author WHERE last_name = ? ORDER BY first_name", getRowMapper(), lastName);
     }
 
     @Override

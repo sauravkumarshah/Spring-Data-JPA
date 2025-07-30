@@ -8,7 +8,6 @@ import tipsontech.example.sdjpajdbctemplate.domain.Book;
 
 import java.util.List;
 
-@Component
 public class BookDaoJDBCTemplate implements BookDao {
 
     private final JdbcTemplate jdbcTemplate;
