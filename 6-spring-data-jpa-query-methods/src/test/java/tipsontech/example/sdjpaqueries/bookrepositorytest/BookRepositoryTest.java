@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.sdjpaqueries.repositories.BookRepository;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -19,6 +21,15 @@ public class BookRepositoryTest {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Test
+    public void testBookStream(){
+        AtomicInteger count = new AtomicInteger(0);
+        bookRepository.findAllByTitleNotNull().forEach(book -> {
+            count.incrementAndGet();
+        });
+        assertThat(count.get()).isGreaterThan(5);
+    }
 
     @Test
     public void testEmptyResultException(){

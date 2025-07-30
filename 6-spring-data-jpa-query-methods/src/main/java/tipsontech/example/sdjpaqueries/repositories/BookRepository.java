@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tipsontech.example.sdjpaqueries.domain.Book;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book findByIsbn(String isbn);
@@ -15,4 +16,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Nullable
     Book getByTitle(@Nullable String title);
+
+    Stream<Book> findAllByTitleNotNull();
 }
