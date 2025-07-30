@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
+    @Query(value = "SELECT * FROM Book b WHERE b.title = :title", nativeQuery = true)
+    Book findBookByTitleNativeQuery(@Param("title") String title);
     @Query("SELECT b FROM Book b WHERE b.title = :title")
     Book findBookByTitleWithQueryNamed(@Param("title") String title);
     @Query("SELECT b FROM Book b WHERE b.title = ?1")
