@@ -4,6 +4,9 @@ import  jakarta.persistence.Entity;
 import  jakarta.persistence.GeneratedValue;
 import  jakarta.persistence.GenerationType;
 import  jakarta.persistence.Id;
+
+import java.util.Objects;
+
 @Entity
 public class OrderHeader {
     @Id
@@ -35,8 +38,8 @@ public class OrderHeader {
 
         OrderHeader that = (OrderHeader) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return customer != null ? customer.equals(that.customer) : that.customer == null;
+        if (!Objects.equals(id, that.id)) return false;
+        return Objects.equals(customer, that.customer);
     }
 
     @Override
