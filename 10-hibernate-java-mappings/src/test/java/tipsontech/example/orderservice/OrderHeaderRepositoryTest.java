@@ -1,5 +1,6 @@
 package tipsontech.example.orderservice;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -7,7 +8,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.orderservice.domain.OrderHeader;
 import tipsontech.example.orderservice.domain.OrderLine;
+import tipsontech.example.orderservice.domain.Product;
+import tipsontech.example.orderservice.domain.ProductStatus;
 import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
+import tipsontech.example.orderservice.repositories.ProductRepository;
 
 import java.util.Set;
 
@@ -22,6 +26,19 @@ class OrderHeaderRepositoryTest {
     @Autowired
     OrderHeaderRepository orderHeaderRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
+    Product product;
+    @BeforeEach
+    public void setUp(){
+        Product newProduct = new Product();
+        newProduct.setDescription("My Product");
+        newProduct.setProductStatus(ProductStatus.NEW);
+        product = productRepository.saveAndFlush(newProduct);
+    }
+
+
     @Test
     public void testSaveOrderWithLine() {
         OrderHeader orderHeader = new OrderHeader();
@@ -29,6 +46,7 @@ class OrderHeaderRepositoryTest {
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
+        orderLine.setProduct(product);
 
         orderHeader.setOrderLines(Set.of(orderLine));
         orderLine.setOrderHeader(orderHeader);
