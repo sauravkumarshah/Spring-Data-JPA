@@ -1,3 +1,5 @@
+drop table if exists order_line cascade;
+
 create table order_line (
     id bigint not null auto_increment primary key,
     quantity_ordered int,
