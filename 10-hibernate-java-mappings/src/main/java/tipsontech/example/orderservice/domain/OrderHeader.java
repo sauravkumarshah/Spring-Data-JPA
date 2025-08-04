@@ -3,6 +3,7 @@ package tipsontech.example.orderservice.domain;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @AttributeOverrides({
@@ -48,6 +49,8 @@ public class OrderHeader extends BaseEntity {
     private Address billingAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+    @OneToMany(mappedBy = "orderHeader")
+    private Set<OrderLine> orderLines;
 
     public String getCustomer() {
         return customer;
@@ -65,16 +68,48 @@ public class OrderHeader extends BaseEntity {
         this.orderStatus = status;
     }
 
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Set<OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
+    public void setOrderLines(Set<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderHeader that)) return false;
         if (!super.equals(o)) return false;
-        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(shippingAddress, that.shippingAddress) && Objects.equals(billingAddress, that.billingAddress) && getStatus() == that.getStatus();
+        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(getShippingAddress(), that.getShippingAddress()) && Objects.equals(getBillingAddress(), that.getBillingAddress()) && getOrderStatus() == that.getOrderStatus() && Objects.equals(getOrderLines(), that.getOrderLines());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getCustomer(), shippingAddress, billingAddress, getStatus());
+        return Objects.hash(super.hashCode(), getCustomer(), getShippingAddress(), getBillingAddress(), getOrderStatus(), getOrderLines());
     }
 }
