@@ -53,8 +53,8 @@ public class OrderHeader extends BaseEntity {
     private OrderStatus orderStatus;
     @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
     private Set<OrderLine> orderLines;
-    @OneToOne
-    private OrderApproval approval;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private OrderApproval orderApproval;
 
     public void addOrderLine(OrderLine orderLine) {
         if(orderLines == null) {
@@ -112,12 +112,12 @@ public class OrderHeader extends BaseEntity {
         this.orderLines = orderLines;
     }
 
-    public OrderApproval getApproval() {
-        return approval;
+    public OrderApproval getOrderApproval() {
+        return orderApproval;
     }
 
-    public void setApproval(OrderApproval approval) {
-        this.approval = approval;
+    public void setOrderApproval(OrderApproval orderApproval) {
+        this.orderApproval = orderApproval;
     }
 
     @Override
@@ -125,11 +125,11 @@ public class OrderHeader extends BaseEntity {
         if (this == o) return true;
         if (!(o instanceof OrderHeader that)) return false;
         if (!super.equals(o)) return false;
-        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(getShippingAddress(), that.getShippingAddress()) && Objects.equals(getBillingAddress(), that.getBillingAddress()) && getOrderStatus() == that.getOrderStatus() && Objects.equals(getOrderLines(), that.getOrderLines()) && Objects.equals(getApproval(), that.getApproval());
+        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(getShippingAddress(), that.getShippingAddress()) && Objects.equals(getBillingAddress(), that.getBillingAddress()) && getOrderStatus() == that.getOrderStatus() && Objects.equals(getOrderLines(), that.getOrderLines()) && Objects.equals(getOrderApproval(), that.getOrderApproval());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getCustomer(), getShippingAddress(), getBillingAddress(), getOrderStatus(), getOrderLines(), getApproval());
+        return Objects.hash(super.hashCode(), getCustomer(), getShippingAddress(), getBillingAddress(), getOrderStatus(), getOrderLines(), getOrderApproval());
     }
 }

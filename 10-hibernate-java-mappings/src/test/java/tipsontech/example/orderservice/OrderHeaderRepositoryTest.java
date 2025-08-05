@@ -43,13 +43,10 @@ class OrderHeaderRepositoryTest {
 
 
     @Test
-    public void testSaveOrderWithLine() {
+    void testSaveOrderWithLine() {
         OrderHeader orderHeader = new OrderHeader();
-
         Customer customer = new Customer();
         customer.setCustomerName("New Customer");
-
-        orderHeader.setCustomer(customer);
         Customer savedCustomer = customerRepository.save(customer);
 
         orderHeader.setCustomer(savedCustomer);
@@ -63,8 +60,7 @@ class OrderHeaderRepositoryTest {
         OrderApproval approval = new OrderApproval();
         approval.setApprovedBy("me");
 
-        OrderApproval savedApproval = orderApprovalRepository.save(approval);
-        orderHeader.setApproval(savedApproval);
+        orderHeader.setOrderApproval(approval);
 
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
@@ -84,15 +80,11 @@ class OrderHeaderRepositoryTest {
     @Test
     void testSaveOrder() {
         OrderHeader orderHeader = new OrderHeader();
-
         Customer customer = new Customer();
         customer.setCustomerName("New Customer");
-
-        orderHeader.setCustomer(customer);
         Customer savedCustomer = customerRepository.save(customer);
 
         orderHeader.setCustomer(savedCustomer);
-
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
         assertNotNull(savedOrder);

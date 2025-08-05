@@ -9,5 +9,5 @@ alter table order_header
     add column order_approval_id bigint;
 
 alter table order_header
-    add constraint fk_order_header_order_approval
+    add constraint order_approval_fk
     foreign key (order_approval_id) references order_approval (id);
