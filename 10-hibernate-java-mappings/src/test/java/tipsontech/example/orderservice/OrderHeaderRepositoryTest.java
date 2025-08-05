@@ -6,14 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import tipsontech.example.orderservice.domain.OrderHeader;
-import tipsontech.example.orderservice.domain.OrderLine;
-import tipsontech.example.orderservice.domain.Product;
-import tipsontech.example.orderservice.domain.ProductStatus;
+import tipsontech.example.orderservice.domain.*;
+import tipsontech.example.orderservice.repositories.CustomerRepository;
 import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 import tipsontech.example.orderservice.repositories.ProductRepository;
-
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,6 +25,9 @@ class OrderHeaderRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
+
     Product product;
     @BeforeEach
     public void setUp(){
@@ -42,7 +41,14 @@ class OrderHeaderRepositoryTest {
     @Test
     public void testSaveOrderWithLine() {
         OrderHeader orderHeader = new OrderHeader();
-        orderHeader.setCustomer("New Customer");
+
+        Customer customer = new Customer();
+        customer.setCustomerName("New Customer");
+
+        orderHeader.setCustomer(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        orderHeader.setCustomer(savedCustomer);
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
@@ -68,7 +74,15 @@ class OrderHeaderRepositoryTest {
     @Test
     void testSaveOrder() {
         OrderHeader orderHeader = new OrderHeader();
-        orderHeader.setCustomer("New Customer");
+
+        Customer customer = new Customer();
+        customer.setCustomerName("New Customer");
+
+        orderHeader.setCustomer(customer);
+        Customer savedCustomer = customerRepository.save(customer);
+
+        orderHeader.setCustomer(savedCustomer);
+
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
         assertNotNull(savedOrder);
