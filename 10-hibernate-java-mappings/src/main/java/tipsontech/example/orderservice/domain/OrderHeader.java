@@ -53,6 +53,8 @@ public class OrderHeader extends BaseEntity {
     private OrderStatus orderStatus;
     @OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
     private Set<OrderLine> orderLines;
+    @OneToOne
+    private OrderApproval approval;
 
     public void addOrderLine(OrderLine orderLine) {
         if(orderLines == null) {
@@ -110,16 +112,24 @@ public class OrderHeader extends BaseEntity {
         this.orderLines = orderLines;
     }
 
+    public OrderApproval getApproval() {
+        return approval;
+    }
+
+    public void setApproval(OrderApproval approval) {
+        this.approval = approval;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof OrderHeader that)) return false;
         if (!super.equals(o)) return false;
-        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(getShippingAddress(), that.getShippingAddress()) && Objects.equals(getBillingAddress(), that.getBillingAddress()) && getOrderStatus() == that.getOrderStatus() && Objects.equals(getOrderLines(), that.getOrderLines());
+        return Objects.equals(getCustomer(), that.getCustomer()) && Objects.equals(getShippingAddress(), that.getShippingAddress()) && Objects.equals(getBillingAddress(), that.getBillingAddress()) && getOrderStatus() == that.getOrderStatus() && Objects.equals(getOrderLines(), that.getOrderLines()) && Objects.equals(getApproval(), that.getApproval());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getCustomer(), getShippingAddress(), getBillingAddress(), getOrderStatus(), getOrderLines());
+        return Objects.hash(super.hashCode(), getCustomer(), getShippingAddress(), getBillingAddress(), getOrderStatus(), getOrderLines(), getApproval());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import tipsontech.example.orderservice.domain.*;
 import tipsontech.example.orderservice.repositories.CustomerRepository;
+import tipsontech.example.orderservice.repositories.OrderApprovalRepository;
 import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 import tipsontech.example.orderservice.repositories.ProductRepository;
 
@@ -27,6 +28,9 @@ class OrderHeaderRepositoryTest {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    OrderApprovalRepository orderApprovalRepository;
 
     Product product;
     @BeforeEach
@@ -55,6 +59,12 @@ class OrderHeaderRepositoryTest {
         orderLine.setProduct(product);
 
         orderHeader.addOrderLine(orderLine);
+
+        OrderApproval approval = new OrderApproval();
+        approval.setApprovedBy("me");
+
+        OrderApproval savedApproval = orderApprovalRepository.save(approval);
+        orderHeader.setApproval(savedApproval);
 
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
