@@ -1,5 +1,6 @@
 package tipsontech.example.orderservice;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,7 @@ import tipsontech.example.orderservice.repositories.OrderApprovalRepository;
 import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 import tipsontech.example.orderservice.repositories.ProductRepository;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -96,5 +96,36 @@ class OrderHeaderRepositoryTest {
         assertNotNull(fetchedOrder.getId());
         assertNotNull(fetchedOrder.getCreatedDate());
         assertNotNull(fetchedOrder.getLastModifiedDate());
+    }
+
+    @Test
+    public void testDeleteCascade() {
+        OrderHeader orderHeader = new OrderHeader();
+
+        Customer customer = new Customer();
+        customer.setCustomerName("new Customer");
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        orderHeader.setCustomer(savedCustomer);
+
+        OrderLine orderLine = new OrderLine();
+        orderLine.setQuantityOrdered(3);
+        orderLine.setProduct(product);
+
+        orderHeader.addOrderLine(orderLine);
+
+        OrderHeader savedOrder = orderHeaderRepository.saveAndFlush(orderHeader);
+
+        System.out.println("Order saved and flushed: " + savedOrder);
+
+        orderHeaderRepository.deleteById(savedOrder.getId());
+        orderHeaderRepository.flush();
+
+        // Get the proxy object
+        OrderHeader proxy = orderHeaderRepository.getById(savedOrder.getId());
+
+        assertThrows(EntityNotFoundException.class, () -> proxy.getOrderStatus());
+
     }
 }
