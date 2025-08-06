@@ -1,6 +1,8 @@
 package tipsontech.example.orderservice.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -43,7 +45,7 @@ import java.util.Set;
 })
 public class OrderHeader extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
     @Embedded
     private Address shippingAddress;
@@ -51,9 +53,11 @@ public class OrderHeader extends BaseEntity {
     private Address billingAddress;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private Set<OrderLine> orderLines;
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderHeader")
+    @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
 
     public void addOrderLine(OrderLine orderLine) {

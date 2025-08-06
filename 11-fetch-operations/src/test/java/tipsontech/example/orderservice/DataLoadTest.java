@@ -13,8 +13,10 @@ import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 import tipsontech.example.orderservice.repositories.ProductRepository;
 
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -36,6 +38,17 @@ public class DataLoadTest {
     ProductRepository productRepository;
 
     @Test
+    public void testN_PlusOneProblem(){
+        Customer customer = customerRepository.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
+
+        IntSummaryStatistics totalOrdered = orderHeaderRepository.findAllByCustomer(customer).stream()
+                .flatMap(orderHeader -> orderHeader.getOrderLines().stream())
+                .collect(Collectors.summarizingInt(OrderLine::getQuantityOrdered));
+
+        System.out.println("total ordered: " + totalOrdered.getSum());
+    }
+
+    @Test
     public void testLazyVsEager(){
         OrderHeader orderHeader = orderHeaderRepository.findById(5L).get();
 
@@ -52,7 +65,7 @@ public class DataLoadTest {
         List<Product> products = loadProducts();
         Customer customer = loadCustomers();
 
-        int ordersToCreate = 100;
+        int ordersToCreate = 2000;
 
         for (int i = 0; i < ordersToCreate; i++){
             System.out.println("Creating order #: " + i);
