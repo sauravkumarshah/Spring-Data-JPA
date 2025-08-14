@@ -1,5 +1,6 @@
 package tipsontech.example.orderservice.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import tipsontech.example.orderservice.domain.Product;
 import tipsontech.example.orderservice.repositories.ProductRepository;
@@ -18,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.saveAndFlush(product);
     }
 
+    @Transactional
     @Override
     public Product updateQOH(Long id, Integer quantityOnHand) {
         Product product = productRepository.findById(id).orElseThrow();
