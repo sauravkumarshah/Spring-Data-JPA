@@ -4,7 +4,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import tipsontech.example.orderservice.domain.Customer;
 import tipsontech.example.orderservice.domain.OrderHeader;
+import tipsontech.example.orderservice.repositories.CustomerRepository;
 import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 
 @Component
@@ -12,6 +14,10 @@ public class Bootstrap implements CommandLineRunner {
 
     @Autowired
     private BootstrapOrderService bootstrapOrderService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
 
 //    @Autowired
 //    private OrderHeaderRepository orderHeaderRepository;
@@ -34,6 +40,16 @@ public class Bootstrap implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         bootstrapOrderService.readOrderData();
+
+        Customer customer = new Customer();
+
+        customer.setCustomerName("Testing Version");
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        System.out.println("Version is : " + savedCustomer.getVersion());
+
+        customerRepository.deleteById(savedCustomer.getId());
 
     }
 }
