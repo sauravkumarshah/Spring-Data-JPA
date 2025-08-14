@@ -16,9 +16,9 @@ FLUSH PRIVILEGES;
 
 SET SQL_SAFE_UPDATES = 0;
 
-update orderservice.order_header set version = 0 where version = null;
+update orderservice.order_header set version = 0 where version is null;
 
-update orderservice.order_line set version = 0 where version = null;
+update orderservice.order_line set version = 0 where version is null;
 
 update orderservice.order_header set version = null;
 
