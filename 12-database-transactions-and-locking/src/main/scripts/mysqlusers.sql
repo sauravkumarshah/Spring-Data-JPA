@@ -8,3 +8,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, EX
 CREATE USER IF NOT EXISTS `orderuser`@`%` IDENTIFIED WITH mysql_native_password BY 'password';
 GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON `orderservice`.* TO `orderuser`@`%`;
 FLUSH PRIVILEGES;
+
+
+
+
+--- extra queries to run on mysql
+
+SET SQL_SAFE_UPDATES = 0;
+
+update orderservice.order_header set version = 0 where version = null;
+
+update orderservice.order_line set version = 0 where version = null;
+
+update orderservice.order_header set version = null;
+
+update orderservice.order_line set version = null;

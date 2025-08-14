@@ -59,6 +59,8 @@ public class OrderHeader extends BaseEntity {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderHeader")
     @Fetch(FetchMode.SELECT)
     private OrderApproval orderApproval;
+    @Version
+    private Integer version;
 
     public void addOrderLine(OrderLine orderLine) {
         if(orderLines == null) {
@@ -123,6 +125,14 @@ public class OrderHeader extends BaseEntity {
     public void setOrderApproval(OrderApproval orderApproval) {
         this.orderApproval = orderApproval;
         this.orderApproval.setOrderHeader(this);
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override

@@ -2,11 +2,15 @@ package tipsontech.example.orderservice.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 
 import java.util.Objects;
 
 @Entity
 public class OrderLine extends BaseEntity {
+
+    @Version
+    private Integer version;
     private Integer quantityOrdered;
 
     @ManyToOne
@@ -36,6 +40,14 @@ public class OrderLine extends BaseEntity {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override
