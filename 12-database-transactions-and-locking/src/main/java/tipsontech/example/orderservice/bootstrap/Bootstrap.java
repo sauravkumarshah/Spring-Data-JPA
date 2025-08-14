@@ -11,21 +11,29 @@ import tipsontech.example.orderservice.repositories.OrderHeaderRepository;
 public class Bootstrap implements CommandLineRunner {
 
     @Autowired
-    private OrderHeaderRepository orderHeaderRepository;
+    private BootstrapOrderService bootstrapOrderService;
 
-    @Transactional // without this the hibernate will throw an exception lazy initialization error
+//    @Autowired
+//    private OrderHeaderRepository orderHeaderRepository;
+//
+//    @Transactional
+//    public void readOrderData() {
+//        OrderHeader orderHeader = orderHeaderRepository.findById(1L).get();
+//
+//        orderHeader.getOrderLines().forEach(orderLine -> {
+//            System.out.println(orderLine.getProduct().getDescription());
+//
+//            orderLine.getProduct().getCategories().forEach(cat -> {
+//                System.out.println(cat.getDescription());
+//            });
+//        });
+//    }
+
+    // without transactional annotation hibernate will throw an exception lazy initialization error
     @Override
     public void run(String... args) throws Exception {
 
-        OrderHeader orderHeader = orderHeaderRepository.findById(1L).get();
-
-        orderHeader.getOrderLines().forEach(orderLine -> {
-            System.out.println(orderLine.getProduct().getDescription());
-
-            orderLine.getProduct().getCategories().forEach(cat -> {
-                System.out.println(cat.getDescription());
-            });
-        });
+        bootstrapOrderService.readOrderData();
 
     }
 }
