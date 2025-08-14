@@ -16,6 +16,8 @@ public class Product extends BaseEntity {
     @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
+    private Integer quantityOnHand = 0;
+
     public String getDescription() {
         return description;
     }
@@ -38,6 +40,14 @@ public class Product extends BaseEntity {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Integer getQuantityOnHand() {
+        return quantityOnHand;
+    }
+
+    public void setQuantityOnHand(Integer quantityOnHand) {
+        this.quantityOnHand = quantityOnHand;
     }
 
     @Override
