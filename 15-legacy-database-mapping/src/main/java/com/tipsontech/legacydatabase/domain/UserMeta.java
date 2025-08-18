@@ -11,7 +11,9 @@ public class UserMeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "umeta_id")
     private Long id;
-    private Long userId;
+//    private Long userId;
+    @ManyToOne
+    private User user;
 
     @Size(max = 255)
     private String metaKey;
@@ -28,13 +30,21 @@ public class UserMeta {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    //    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
 
     public String getMetaKey() {
         return metaKey;
