@@ -4,6 +4,7 @@ import com.tipsontech.creditcard.interceptors.EncryptedString;
 import jakarta.persistence.*;
 
 @Entity
+@EntityListeners(CreditCardJPACallback.class)
 public class CreditCard {
 
     @Id
