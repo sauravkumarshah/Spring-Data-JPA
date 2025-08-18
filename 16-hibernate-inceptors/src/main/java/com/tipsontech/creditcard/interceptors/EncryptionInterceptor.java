@@ -1,4 +1,4 @@
-package com.tipsontech.creditcard;
+package com.tipsontech.creditcard.interceptors;
 
 import com.tipsontech.creditcard.domain.CreditCard;
 import com.tipsontech.creditcard.services.EncryptionService;
