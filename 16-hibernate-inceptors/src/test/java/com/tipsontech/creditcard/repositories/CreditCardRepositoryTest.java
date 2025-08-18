@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Map;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -24,12 +26,8 @@ class CreditCardRepositoryTest {
     @Autowired
     private CreditCardRepository creditCardRepository;
 
-    @Test
-    public void testEncryptAndDecryptCreditCardNumber(){
-        String encryptedCreditCardNumber = encryptionService.encrypt(CREDIT_CARD_NUMBER);
-        String decryptedCreditCardNumber = encryptionService.decrypt(encryptedCreditCardNumber);
-        assertThat(CREDIT_CARD_NUMBER, equalTo(decryptedCreditCardNumber));
-    }
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
     public void testSaveAndStoreCreditCard(){
@@ -38,18 +36,25 @@ class CreditCardRepositoryTest {
         creditCard.setCvv("123");
         creditCard.setExpirationDate("12/2028");
 
-        CreditCard savedCC = creditCardRepository.save(creditCard);
+        CreditCard savedCC = creditCardRepository.saveAndFlush(creditCard);
 
-        System.out.println("Getting CC from database : " + creditCard.getCreditCardNumber());
+        System.out.println("Getting CC from database: " + creditCard.getCreditCardNumber());
 
         System.out.println("CC At Rest");
+        System.out.println("CC Encrypted: " + encryptionService.encrypt(CREDIT_CARD_NUMBER));
 
-        System.out.println("CC Encrypted : " + encryptionService.encrypt(CREDIT_CARD_NUMBER));
+        Map<String, Object> dbRow = jdbcTemplate.queryForMap("SELECT * FROM credit_card " +
+                "WHERE id = " + savedCC.getId());
 
-        CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).orElse(null);
+        String dbCardValue = (String) dbRow.get("credit_card_number");
 
-        assertNotNull(fetchedCC);
-        assertThat(savedCC.getCreditCardNumber(), equalTo(fetchedCC.getCreditCardNumber()));
+        assertThat(savedCC.getCreditCardNumber()).isNotEqualTo(dbCardValue);
+        assertThat(dbCardValue).isEqualTo(encryptionService.encrypt(CREDIT_CARD_NUMBER));
+
+        CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).get();
+
+        assertThat(savedCC.getCreditCardNumber()).isEqualTo(fetchedCC.getCreditCardNumber());
+
     }
 
 }
