@@ -1,10 +1,8 @@
 package com.tipsontech.creditcard.domain;
 
 import com.tipsontech.creditcard.interceptors.EncryptedString;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 @Entity
 public class CreditCard {
 
@@ -49,6 +47,11 @@ public class CreditCard {
 
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    @PrePersist
+    public void prePersistCallback(){
+        System.out.println("JPA PrePersist Callback was called");
     }
 
 }
