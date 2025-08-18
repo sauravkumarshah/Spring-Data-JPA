@@ -17,6 +17,7 @@ public class UserMeta {
     private String metaKey;
 
     @Lob
+    @Column(columnDefinition = "longtext")
     private String metaValue;
 
     public Long getId() {

@@ -1,7 +1,9 @@
 package com.tipsontech.legacydatabase.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
 import java.sql.Timestamp;
@@ -21,24 +23,24 @@ public class User {
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "user_pass")
+    @Column(name = "user_pass", length = 255)
     private String password;
 
     @NotNull
     @Size(max = 50)
-    @Column(name = "user_nicename")
+    @Column(name = "user_nicename", length = 50)
     private String nicename;
 
     @Email
     @NotNull
     @Size(max = 100)
-    @Column(name = "user_email")
+    @Column(name = "user_email", length = 100)
     private String email;
 
     @URL
     @NotNull
     @Size(max = 100)
-    @Column(name = "user_url")
+    @Column(name = "user_url", length = 100)
     private String url;
 
     @NotNull
@@ -47,7 +49,7 @@ public class User {
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "user_activation_key")
+    @Column(name = "user_activation_key", length = 255)
     private String activationKey;
 
     @NotNull
