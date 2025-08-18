@@ -10,7 +10,7 @@ public class CardHolderDatabaseConfiguration {
 
     @Bean
     @ConfigurationProperties("spring.cardholder.datasource")
-    public DataSourceProperties databaseConfiguration() {
+    public DataSourceProperties cardHolderDataSourceProperties() {
         return new DataSourceProperties();
     }
 }
