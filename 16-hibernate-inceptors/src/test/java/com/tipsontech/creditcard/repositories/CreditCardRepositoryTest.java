@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CreditCardRepositoryTest {
 
-    final String CREDIT_CARD_NUMBER = "1234-1234-1234-1234";
+    final String CREDIT_CARD_NUMBER = "1234123412341234";
 
     @Autowired
     private EncryptionService encryptionService;
