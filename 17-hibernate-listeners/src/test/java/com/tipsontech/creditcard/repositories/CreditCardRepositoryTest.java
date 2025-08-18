@@ -48,8 +48,8 @@ class CreditCardRepositoryTest {
 
         String dbCardValue = (String) dbRow.get("credit_card_number");
 
-//        assertThat(savedCC.getCreditCardNumber()).isNotEqualTo(dbCardValue);
-//        assertThat(dbCardValue).isEqualTo(encryptionService.encrypt(CREDIT_CARD_NUMBER));
+        assertThat(savedCC.getCreditCardNumber()).isNotEqualTo(dbCardValue);
+        assertThat(dbCardValue).isEqualTo(encryptionService.encrypt(CREDIT_CARD_NUMBER));
 
         CreditCard fetchedCC = creditCardRepository.findById(savedCC.getId()).get();
 
