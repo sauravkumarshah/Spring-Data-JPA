@@ -22,7 +22,7 @@ public class FlywayConfiguration {
                 .dataSource(cardFlywayDataSourceProperties.getUrl(),
                         cardFlywayDataSourceProperties.getUsername(),
                         cardFlywayDataSourceProperties.getPassword())
-                .locations("classpath:db/migrations/card")
+                .locations("classpath:db/migration/card")
                 .load();
     }
 
@@ -38,7 +38,7 @@ public class FlywayConfiguration {
                 .dataSource(cardHolderFlywayDataSourceProperties.getUrl(),
                         cardHolderFlywayDataSourceProperties.getUsername(),
                         cardHolderFlywayDataSourceProperties.getPassword())
-                .locations("classpath:db/migrations/cardholder")
+                .locations("classpath:db/migration/cardholder")
                 .load();
     }
 
@@ -54,7 +54,7 @@ public class FlywayConfiguration {
                 .dataSource(panFlywayDataSourceProperties.getUrl(),
                         panFlywayDataSourceProperties.getUsername(),
                         panFlywayDataSourceProperties.getPassword())
-                .locations("classpath:db/migrations/pan")
+                .locations("classpath:db/migration/pan")
                 .load();
     }
 }
