@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CardHolderDatabaseConfiguration {
+public class PanDatabaseConfiguration {
 
     @Bean
-    @ConfigurationProperties("spring.cardholder.datasource")
+    @ConfigurationProperties("spring.pan.datasource")
     public DataSourceProperties databaseConfiguration() {
         return new DataSourceProperties();
     }
