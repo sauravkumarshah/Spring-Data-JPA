@@ -1,6 +1,5 @@
 package com.tipsontech.creditcard.config;
 
-import com.tipsontech.creditcard.domain.creditcard.CreditCard;
 import com.tipsontech.creditcard.domain.creditcardpan.CreditCardPAN;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,6 +36,7 @@ public class PanDatabaseConfiguration {
                 .build();
     }
 
+    @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean panEntityManagerFactory(@Qualifier("panDataSource") DataSource panDataSource, EntityManagerFactoryBuilder builder) {
         return builder.dataSource(panDataSource)
@@ -45,6 +45,7 @@ public class PanDatabaseConfiguration {
                 .build();
     }
 
+    @Primary
     @Bean
     public PlatformTransactionManager panTransactionManager(@Qualifier("panEntityManagerFactory") LocalContainerEntityManagerFactoryBean panEntityManagerFactory) {
         return new JpaTransactionManager(panEntityManagerFactory.getObject());
