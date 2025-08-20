@@ -31,7 +31,11 @@ class ApplicationTests {
 		assertThat(savedCreditCard.getId()).isNotNull();
 		assertThat(savedCreditCard.getCreditCardNumber()).isNotNull();
 
-		System.out.println(savedCreditCard);
+		CreditCard fetchedCreditCard = creditCardService.getCreditCardById(savedCreditCard.getId());
+
+		assertThat(fetchedCreditCard).isNotNull();
+		assertThat(fetchedCreditCard.getId()).isNotNull();
+		assertThat(fetchedCreditCard.getCreditCardNumber()).isNotNull();
 	}
 
 	@Test
