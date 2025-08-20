@@ -17,6 +17,4 @@ public class CreditCardPAN {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Convert(converter = CreditCardConverter.class)
-    private String creditCardNumber;
 }
