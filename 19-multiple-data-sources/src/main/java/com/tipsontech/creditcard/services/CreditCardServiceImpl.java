@@ -8,6 +8,7 @@ import com.tipsontech.creditcard.repositories.creditcard.CreditCardRepository;
 import com.tipsontech.creditcard.repositories.pan.CreditCardPANRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class CreditCardServiceImpl implements CreditCardService {
     private final CreditCardHolderRepository creditCardHolderRepository;
     private final CreditCardRepository creditCardRepository;
 
+    @Transactional
     @Override
     public CreditCard getCreditCardById(Long id) {
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow();
@@ -31,6 +33,7 @@ public class CreditCardServiceImpl implements CreditCardService {
         return creditCard;
     }
 
+    @Transactional
     @Override
     public CreditCard saveCreditCard(CreditCard creditCard) {
         CreditCard savedCC = creditCardRepository.save(creditCard);
